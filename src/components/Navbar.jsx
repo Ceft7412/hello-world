@@ -4,7 +4,7 @@ import WbSunnyRoundedIcon from "@mui/icons-material/WbSunnyRounded";
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import { toggleTheme } from "@/redux/themeSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { motion, AnimatePresence     } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 function Navbar() {
   const [isHovered, setIsHovered] = useState(false);
   const dispatch = useDispatch();
@@ -41,8 +41,8 @@ function Navbar() {
   return (
     <header
       className={`header ${
-        darkTheme ? "bg-gray-950 shadow-xl" : "shadow"
-      } fixed top-0 left-0 right-0 h-[50px] `}
+        darkTheme ? "bg-gray-950 shadow-xl" : "shadow bg-white"
+      } fixed  top-0 left-0 right-0 h-[50px] `}
     >
       <div className="header__flex  relative flex  w-full h-full justify-between items-center px-16">
         <div className="header__logo absolute left-[50%] -translate-x-2/4">
