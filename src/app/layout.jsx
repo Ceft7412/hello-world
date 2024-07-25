@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "@/resources/sass/styles.scss";
 import Navbar from "@/components/Navbar";
 import Providers from "./provider";
-
+import Footer from "@/components/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -14,11 +14,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="bg-black">
+      <body>
         <Providers>
           <Navbar />
 
           {children}
+          <Footer />
         </Providers>
       </body>
     </html>
