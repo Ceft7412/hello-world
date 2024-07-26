@@ -5,12 +5,15 @@ import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import { toggleTheme } from "@/redux/themeSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { motion, AnimatePresence } from "framer-motion";
-function Navbar() {
+import SignInGoogle from "@/components/SignInGoogle";
+
+function Navbar({ isShow = true }) {
   const [isHovered, setIsHovered] = useState(false);
   const dispatch = useDispatch();
   const darkTheme = useSelector((state) => state.theme.darkTheme);
   console.log(darkTheme);
   // Perform when dark theme changes
+
   useEffect(() => {
     document.body.className = darkTheme ? "darkTheme" : "";
   }, [darkTheme]);
@@ -54,7 +57,7 @@ function Navbar() {
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
-            <span className="flex items-center    ">
+            <span className={`flex items-center ${!isShow ? "hidden" : ""}`}>
               Topics <ExpandMoreRoundedIcon />
             </span>
             <AnimatePresence>
@@ -84,6 +87,8 @@ function Navbar() {
               )}
             </AnimatePresence>
           </ul>
+          <SignInGoogle isShow={isShow} />
+
           <WbSunnyRoundedIcon
             className={`cursor-pointer transition-colors duration-300 ease-in-out  hover:text-violet-900`}
             onClick={() => dispatch(toggleTheme())}
