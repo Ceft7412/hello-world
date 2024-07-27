@@ -5,12 +5,18 @@ import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import { toggleTheme } from "@/redux/themeSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { motion, AnimatePresence } from "framer-motion";
-import SignInGoogle from "@/components/SignInGoogle";
-
-function Navbar({ isShow = true }) {
+import { auth, googleProvider } from "@/firebase/firebase";
+import { signInWithPopup } from "firebase/auth";
+import { setUser } from "@/redux/authSlice";
+import { fetchCurrentUser } from "@/services/blogService";
+import User from "./User";
+function Navbar() {
   const [isHovered, setIsHovered] = useState(false);
   const dispatch = useDispatch();
   const darkTheme = useSelector((state) => state.theme.darkTheme);
+  const user = useSelector((state) => state.auth.user);
+
+  console.log(user);
   console.log(darkTheme);
   // Perform when dark theme changes
 
@@ -41,11 +47,21 @@ function Navbar({ isShow = true }) {
     },
   };
 
+  const signInWithGoogle = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      console.log(result.user);
+      dispatch(setUser(result.user));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <header
       className={`header ${
         darkTheme ? "bg-gray-950 shadow-xl" : "shadow bg-white"
-      } fixed  top-0 left-0 right-0 h-[50px] `}
+      } fixed  z-20 top-0 left-0 right-0 h-[50px] `}
     >
       <div className="header__flex  relative flex  w-full h-full justify-between items-center px-16">
         <div className="header__logo absolute left-[50%] -translate-x-2/4">
@@ -57,7 +73,7 @@ function Navbar({ isShow = true }) {
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
-            <span className={`flex items-center ${!isShow ? "hidden" : ""}`}>
+            <span className={`flex items-center`}>
               Topics <ExpandMoreRoundedIcon />
             </span>
             <AnimatePresence>
@@ -87,7 +103,9 @@ function Navbar({ isShow = true }) {
               )}
             </AnimatePresence>
           </ul>
-          <SignInGoogle isShow={isShow} />
+          <span className="cursor-pointer" onClick={signInWithGoogle}>
+            <User />
+          </span>
 
           <WbSunnyRoundedIcon
             className={`cursor-pointer transition-colors duration-300 ease-in-out  hover:text-violet-900`}

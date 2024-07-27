@@ -1,30 +1,33 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import app from "@/firebase/firebase";
+import { useState, useEffect } from "react";
 import AuthLayout from "@/app/layouts/AuthLayout";
 import MailRoundedIcon from "@mui/icons-material/MailRounded";
 import KeyRoundedIcon from "@mui/icons-material/KeyRounded";
+
 function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const router = useRouter();
-  const auth = getAuth(app);
+  const [isEnterPressed, setIsEnterPressed] = useState(false);
+  const [error, setError] = useState(false);
+  const [clientError, setClientError] = useState(null);
 
-  const handleSignIn = async (e) => {
-    e.preventDefault();
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      router.push("/admin/dashboard");
-    } catch (error) {
-      console.error("Error signing in:", error);
+  // Handle Enter key
+
+  const handlePressKey = (e) => {
+    if (e.key === "Enter") {
+      setIsEnterPressed(e);
     }
   };
   return (
     <AuthLayout>
       <section className="w-80  h-80 rounded flex items-center flex-col">
+        {error && (
+          <p className="my-2 w-full bg-red-500 text-white p-2 text-center">{error}</p>
+        )}
+        {clientError && (
+          <p className="w-full bg-red-500 text-white p-2 text-center">{clientError}</p>
+        )}
         <h1 className="w-full text-center font-medium p-2 text-2xl border-b-2">Admin</h1>
         <ul className=" w-full mt-10">
           <li className="w-full hover:bg-gray-200 cursor-pointer transition-colors  ease-in p-4 py-3 border-2 font-medium flex items-center justify-center gap-2">
@@ -57,7 +60,12 @@ function SignIn() {
           </li>
         </ul>
         <span className="p-10 py-6">or</span>
-        <form onSubmit={handleSignIn} className="w-full flex flex-col gap-6">
+        <form
+          onSubmit={handleSignIn}
+          onKeyDown={handlePressKey}
+          onKeyUp={() => setIsEnterPressed(false)}
+          className="w-full flex flex-col gap-6"
+        >
           <div className="w-full relative">
             <MailRoundedIcon className="text-gray-600 absolute left-3 top-[50%] -translate-y-[50%]" />
             <input
@@ -79,7 +87,9 @@ function SignIn() {
             />
           </div>
           <button
-            className="hover:bg-violet-600 mt-6 p-4 w-full bg-violet-500 text-white"
+            className={`${
+              isEnterPressed ? "bg-violet-300" : "bg-violet-500"
+            } hover:bg-violet-600 active:scale-105 mt-6 p-4 w-full  text-white`}
             type="submit"
           >
             Sign-in

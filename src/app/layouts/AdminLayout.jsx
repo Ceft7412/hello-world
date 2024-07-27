@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 function AdminLayout({ children }) {
   return (
     <>
-      <Navbar isShow={false} />
+      <Navbar />
       <main className="flex items-center  justify-center min-h-screen py-24 px-10">
         {children}
       </main>

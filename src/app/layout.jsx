@@ -1,9 +1,6 @@
-"use client";
-
 import { Inter } from "next/font/google";
 // import "./globals.css";
 import "@/resources/sass/styles.scss";
-import { useRouter } from "next/router";
 
 import Providers from "./provider";
 
