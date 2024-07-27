@@ -10,10 +10,10 @@ export const fetchBlogs = async () => {
   return blogs;
 };
 export const fetchCurrentUser = () => {
-  return new Promise((resolve, reject) => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      unsubscribe();
-      resolve(user);
-    }, reject);
-  });
+  const user = auth.currentUser;
+  if (user) {
+    return user;
+  } else {
+    return null;
+  }
 };

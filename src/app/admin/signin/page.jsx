@@ -2,16 +2,19 @@
 
 import { useState, useEffect } from "react";
 import AuthLayout from "@/app/layouts/AuthLayout";
+import { redirect } from "next/navigation";
+import { isAuthenticated } from "@/utils/Auth";
 import MailRoundedIcon from "@mui/icons-material/MailRounded";
 import KeyRoundedIcon from "@mui/icons-material/KeyRounded";
-
+import { useSelector } from "react-redux";
 function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isEnterPressed, setIsEnterPressed] = useState(false);
   const [error, setError] = useState(false);
   const [clientError, setClientError] = useState(null);
-
+  const role = useSelector((state) => state.auth.role);
+  const user = useSelector((state) => state.auth.user);
   // Handle Enter key
 
   const handlePressKey = (e) => {
@@ -19,6 +22,25 @@ function SignIn() {
       setIsEnterPressed(e);
     }
   };
+
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    if (!email || !password) {
+      setClientError("Please fill all the fields.");
+      return;
+    } else {
+      setClientError(null);
+    }
+    try {
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
+
+  if (role === "users" && user) {
+    redirect("/");
+  }
   return (
     <AuthLayout>
       <section className="w-80  h-80 rounded flex items-center flex-col">

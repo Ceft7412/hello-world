@@ -1,25 +1,32 @@
 "use client";
 import React, { useState, useEffect } from "react";
+
+// Icons
 import WbSunnyRoundedIcon from "@mui/icons-material/WbSunnyRounded";
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
+
+// Redux
 import { toggleTheme } from "@/redux/themeSlice";
 import { useDispatch, useSelector } from "react-redux";
+
 import { motion, AnimatePresence } from "framer-motion";
-import { auth, googleProvider } from "@/firebase/firebase";
-import { signInWithPopup } from "firebase/auth";
+import { auth, googleProvider, db } from "@/firebase/firebase";
+import { signInWithPopup, signOut } from "firebase/auth";
 import { setUser } from "@/redux/authSlice";
-import { fetchCurrentUser } from "@/services/blogService";
-import User from "./User";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import Image from "next/image";
+
 function Navbar() {
   const [isHovered, setIsHovered] = useState(false);
   const dispatch = useDispatch();
   const darkTheme = useSelector((state) => state.theme.darkTheme);
   const user = useSelector((state) => state.auth.user);
+ 
+  const auth = useSelector((state) => state.auth);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
 
-  console.log(user);
-  console.log(darkTheme);
   // Perform when dark theme changes
-
   useEffect(() => {
     document.body.className = darkTheme ? "darkTheme" : "";
   }, [darkTheme]);
@@ -50,8 +57,30 @@ function Navbar() {
   const signInWithGoogle = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
-      console.log(result.user);
+      const userRef = doc(db, "users", result.user.uid);
+      const userSnap = await getDoc(userRef);
+
+      if (!userSnap.exists()) {
+        // If the user doesn't exist, create a new document with the user's ID as the document ID
+        await setDoc(userRef, {
+          name: result.user.displayName,
+          email: result.user.email,
+          photoURL: result.user.photoURL,
+          role: "user",
+          // Add any additional fields you want to store
+        });
+      }
+
       dispatch(setUser(result.user));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const signOut = async () => {
+    try {
+      await auth.signOut();
+      dispatch(clearUser());
     } catch (error) {
       console.error(error);
     }
@@ -67,9 +96,9 @@ function Navbar() {
         <div className="header__logo absolute left-[50%] -translate-x-2/4">
           HELLO, <span className="logo__world">WORLD!</span>
         </div>
-        <nav className="header__nav-links ml-auto flex gap-2">
+        <nav className="header__nav-links ml-auto flex items-center gap-2">
           <ul
-            className="header__ul mr-5 relative cursor-pointer"
+            className="header__ul mr-5 relative cursor-pointer "
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
@@ -103,10 +132,52 @@ function Navbar() {
               )}
             </AnimatePresence>
           </ul>
-          <span className="cursor-pointer" onClick={signInWithGoogle}>
-            <User />
-          </span>
+          <div className="mr-6 flex items-center gap-5 ">
+            {user && (
+              <div className="relative">
+                <div onClick={() => setIsModalOpen(!isModalOpen)}>
+                  <Image
+                    className="rounded-full"
+                    src={user.photoURL}
+                    alt={user.name}
+                    width={40}
+                    height={40}
+                  />
+                  <ExpandMoreRoundedIcon
+                    className={`absolute bg-gray-300 ${
+                      darkTheme ? "bg-gray-900" : ""
+                    } rounded-full text-[12px] right-[1px] bottom-0`}
+                  />
+                </div>
 
+                <AnimatePresence>
+                  {isModalOpen && (
+                    <motion.div
+                      className={`modal-out  ${
+                        darkTheme ? "bg-gray-950" : "bg-white"
+                      } rounded absolute shadow-md right-0`}
+                      variants={modalVariant}
+                      initial="hidden"
+                      animate="visible"
+                      exit="exit"
+                    >
+                      <p
+                        className="p-2 whitespace-nowrap cursor-pointer hover:bg-sky-300/[.06]"
+                        onClick={user ? signOut : null}
+                      >
+                        Sign out
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            )}
+            {!user && (
+              <span className="cursor-pointer" onClick={signInWithGoogle}>
+                Sign In
+              </span>
+            )}
+          </div>
           <WbSunnyRoundedIcon
             className={`cursor-pointer transition-colors duration-300 ease-in-out  hover:text-violet-900`}
             onClick={() => dispatch(toggleTheme())}
