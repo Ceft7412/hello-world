@@ -10,8 +10,9 @@ import { toggleTheme } from "@/redux/themeSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { auth, googleProvider, db } from "@/firebase/firebase";
+
 import { signInWithPopup, signOut } from "firebase/auth";
+import { auth, googleProvider, db } from "@/firebase/firebase";
 import { setUser } from "@/redux/authSlice";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import Image from "next/image";
@@ -21,10 +22,8 @@ function Navbar() {
   const dispatch = useDispatch();
   const darkTheme = useSelector((state) => state.theme.darkTheme);
   const user = useSelector((state) => state.auth.user);
- 
-  const auth = useSelector((state) => state.auth);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
 
   // Perform when dark theme changes
   useEffect(() => {
@@ -77,9 +76,9 @@ function Navbar() {
     }
   };
 
-  const signOut = async () => {
+  const logout = async () => {
     try {
-      await auth.signOut();
+      await signOut(auth);
       dispatch(clearUser());
     } catch (error) {
       console.error(error);
@@ -163,7 +162,7 @@ function Navbar() {
                     >
                       <p
                         className="p-2 whitespace-nowrap cursor-pointer hover:bg-sky-300/[.06]"
-                        onClick={user ? signOut : null}
+                        onClick={user ? logout : null}
                       >
                         Sign out
                       </p>
