@@ -14,12 +14,13 @@ const authSlice = createSlice({
   reducers: {
     setUser: (state, action) => {
       if (action.payload) {
-        state.user = action.payload;
+        const { role, email, displayName, photoURL } = action.payload;
+        state.user = { role, email, displayName, photoURL };
         state.loading = false;
-        state.role = action.payload.role;
-        state.email = action.payload.email;
-        state.name = action.payload.displayName;
-        state.photoURL = action.payload.photoURL;
+        state.role = role;
+        state.email = email;
+        state.name = displayName;
+        state.photoURL = photoURL;
       } else {
         state.user = null;
         state.loading = false;
