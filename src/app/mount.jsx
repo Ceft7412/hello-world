@@ -9,7 +9,7 @@ import { auth, db } from "@/firebase/firebase";
 export default function Mount({ children }) {
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  useEffect(() => {     
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         // User is signed in, fetch additional user data from Firestore
