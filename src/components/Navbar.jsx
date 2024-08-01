@@ -96,41 +96,6 @@ function Navbar() {
           HELLO, <span className="logo__world">WORLD!</span>
         </div>
         <nav className="header__nav-links ml-auto flex items-center gap-2">
-          <ul
-            className="header__ul mr-5 relative cursor-pointer "
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          >
-            <span className={`flex items-center`}>
-              Topics <ExpandMoreRoundedIcon />
-            </span>
-            <AnimatePresence>
-              {isHovered && (
-                <motion.div
-                  className={`header__ul-links ${
-                    darkTheme ? "bg-gray-950" : "bg-white"
-                  } shadow w-36 absolute right-2`}
-                  variants={modalVariant}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                >
-                  <li className="header__link p-2 hover:bg-violet-600 hover:text-white">
-                    JS
-                  </li>
-                  <li className="header__link p-2 hover:bg-violet-600 hover:text-white">
-                    REACT
-                  </li>
-                  <li className="header__link p-2 hover:bg-violet-600 hover:text-white">
-                    TAILWIND
-                  </li>
-                  <li className="header__link p-2 hover:bg-violet-600 hover:text-white">
-                    SASS
-                  </li>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </ul>
           <div className="mr-6 flex items-center gap-5 ">
             {user && (
               <div className="relative">
@@ -171,6 +136,7 @@ function Navbar() {
                 </AnimatePresence>
               </div>
             )}
+
             {!user && (
               <span className="cursor-pointer" onClick={signInWithGoogle}>
                 Sign In
