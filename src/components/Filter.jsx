@@ -4,11 +4,13 @@ import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownR
 import { fetchBlogs } from "@/services/blogService";
 import { useSelector } from "react-redux";
 import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
+import { useRouter } from "next/navigation";
 
 function Filter({ categories }) {
   const [showModal, setShowModal] = React.useState(false);
   const darkTheme = useSelector((state) => state.theme.darkTheme);
   const [filter, setFilter] = React.useState(false);
+  const router = useRouter();
 
   const handleSubcategoryClick = (subcategory) => {
     router.push(`/?filter=${subcategory}`);
