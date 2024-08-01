@@ -13,7 +13,14 @@ function Filter({ categories }) {
   const router = useRouter();
 
   const handleSubcategoryClick = (subcategory) => {
-    router.push(`/?filter=${subcategory}`);
+    // Creates a new URL object with the current window location.
+    // This is done to update the URL query parameters by appending it if search query is present. 
+    const url = new URL(window.location);
+    // Sets the filter query parameter to the selected subcategory
+    url.searchParams.set("filter", subcategory);
+    // Navigates to the new URL
+    router.push(url.toString());
+    // Closes the filter dropdown
     setFilter(false);
   };
 
