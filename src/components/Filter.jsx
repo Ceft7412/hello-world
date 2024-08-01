@@ -10,9 +10,8 @@ function Filter({ categories }) {
   const darkTheme = useSelector((state) => state.theme.darkTheme);
   const [filter, setFilter] = React.useState(false);
 
-  const handleSubcategoryClick = async (subcategory) => {
-    const blogs = await fetchBlogs(subcategory);
-    setBlogs(blogs);
+  const handleSubcategoryClick = (subcategory) => {
+    router.push(`/?filter=${subcategory}`);
   };
 
   return (
