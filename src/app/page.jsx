@@ -2,17 +2,20 @@ import MainLayout from "./layouts/MainLayout";
 import Card from "@/components/Card";
 import { fetchCategories } from "@/services/category";
 import { fetchBlogs } from "@/services/blogService";
-import { fetchSubcategoriesByCategory } from "@/services/subcategory";
 import Search from "@/components/Search";
 import Filter from "@/components/Filter";
 
 export default async function Home({ searchParams }) {
   let categories = [];
   let blogs = [];
+
+  // Assigns the filter and search query parameters to the variables filter and search respectively
   const filter = searchParams.filter || "";
+  const search = searchParams.search || "";
   try {
     categories = await fetchCategories();
-    blogs = await fetchBlogs(filter);
+    // Fetches blogs based on the filter and search query parameters
+    blogs = await fetchBlogs(filter, search);
   } catch (error) {
     console.error("Error fetching data:", error);
   }
