@@ -29,3 +29,7 @@ export default async function Home({ searchParams }) {
     </MainLayout>
   );
 }
+
+export const metadata = {
+  searchParams: true,
+};
