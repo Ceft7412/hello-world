@@ -5,21 +5,8 @@ import Empty from "./Empty";
 import CardContainer from "./CardContainer";
 import { useEffect, useState } from "react";
 
-export default function Card({ darkTheme }) {
-  const [blogs, setBlogs] = useState([]);
+export default function Card({ darkTheme, blogs }) {
   const [arg, setArg] = useState("nextjs");
-  useEffect(() => {
-    async function getBlogs() {
-      try {
-        const blogs = await fetchBlogs();
-        setBlogs(blogs);
-      } catch (error) {
-        console.error("Error fetching blogs:", error);
-      }
-    }
-
-    getBlogs();
-  }, [blogs, arg]);
 
   const filteredBlogs = blogs.filter((blog) =>
     blog.subcategories.some((subcategory) => subcategory.id === arg)
