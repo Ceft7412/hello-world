@@ -6,15 +6,10 @@ import CardContainer from "./CardContainer";
 import { useEffect, useState } from "react";
 
 export default function Card({ darkTheme, blogs }) {
-  const [arg, setArg] = useState("nextjs");
-
-  const filteredBlogs = blogs.filter((blog) =>
-    blog.subcategories.some((subcategory) => subcategory.id === arg)
-  );
 
   return (
     <>
-      {filteredBlogs.map((blog) => (
+      {blogs.map((blog) => (
         <CardContainer key={blog.id}>
           <div className="flex gap-5">
             {blog.subcategories.map((cat) => (
