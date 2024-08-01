@@ -6,12 +6,13 @@ import { fetchSubcategoriesByCategory } from "@/services/subcategory";
 import Search from "@/components/Search";
 import Filter from "@/components/Filter";
 
-export default async function Home() {
+export default async function Home({ searchParams }) {
   let categories = [];
   let blogs = [];
-
+  const filter = searchParams.filter || "";
   try {
-    [categories, blogs] = await Promise.all([fetchCategories(), fetchBlogs()]);
+    categories = await fetchCategories();
+    blogs = await fetchBlogs(filter);
   } catch (error) {
     console.error("Error fetching data:", error);
   }
