@@ -6,7 +6,10 @@ import CardContainer from "./CardContainer";
 import { useEffect, useState } from "react";
 
 export default function Card({ darkTheme, blogs }) {
-   return (
+  if (!blogs.length) {
+    return <Empty>No results found.</Empty>;
+  }
+  return (
     <>
       {blogs.map((blog) => (
         <CardContainer key={blog.id}>
