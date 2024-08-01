@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function Empty({ children }) {
   return (
     <section className="absolute left-20 z-2">
