@@ -14,16 +14,14 @@ export default async function Home() {
     console.error("Error fetching categories:", error);
   }
 
- 
-
   return (
     <MainLayout>
       <div className="flex justify-between w-full">
         <Filter categories={categories} />
-        <Search />
+        <Search />  
       </div>
       <div className="home self-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-20">
-        <Card  />
+        <Card />
       </div>
     </MainLayout>
   );
