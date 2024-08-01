@@ -14,6 +14,7 @@ function Filter({ categories }) {
 
   const handleSubcategoryClick = (subcategory) => {
     router.push(`/?filter=${subcategory}`);
+    setFilter(false);
   };
 
   return (
