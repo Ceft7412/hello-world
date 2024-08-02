@@ -27,7 +27,7 @@ function Navbar() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const user = JSON.parse(localStorage.getItem("user"));
+      const user = JSON.parse(window.localStorage.getItem("user"));
       if (user) {
         setIsLogin(true);
         dispatch(setUser(user));
@@ -43,7 +43,7 @@ function Navbar() {
     dispatch(toggleTheme());
     const currentTheme = darkTheme ? false : true;
     if (typeof window !== "undefined") {
-      localStorage.setItem("darkTheme", JSON.stringify(currentTheme));
+      window.localStorage.setItem("darkTheme", JSON.stringify(currentTheme));
     }
   };
   const signInWithGoogle = async () => {
@@ -57,7 +57,7 @@ function Navbar() {
         uid: result.user.uid,
       };
       if (typeof window !== "undefined") {
-        localStorage.setItem("user", JSON.stringify(userObj));
+        window.localStorage.setItem("user", JSON.stringify(userObj));
       }
       const userRef = doc(db, "users", result.user.uid);
       const userSnap = await getDoc(userRef);
@@ -83,7 +83,7 @@ function Navbar() {
     try {
       await signOut(auth);
       if (typeof window !== "undefined") {
-        localStorage.removeItem("user");
+        window.localStorage.removeItem("user");
       }
       setIsLogin(false);
       dispatch(clearUser());
