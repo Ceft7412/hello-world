@@ -46,7 +46,7 @@ export default async function BlogPost({ params }) {
 
   return (
     <MainLayout>
-      <div className="flex w-[80%] xl:pr-[250px]">
+      <div className="flex p-1 sm:w-[80%] xl:pr-[250px]">
         <div className="flex-1">
           <article className="">
             <header className="border-b">
