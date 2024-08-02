@@ -18,7 +18,7 @@
     "framer-motion": "^11.3.17",
     "jsdom": "^24.1.1",
     "next": "14.2.5",
-    "nprogress": "^0.2.0",
+    "nextjs-toploader": "^1.6.12",
     "react": "^18",
     "react-dom": "^18",
     "react-redux": "^9.1.2",
