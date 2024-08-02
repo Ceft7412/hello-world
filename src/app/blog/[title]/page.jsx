@@ -53,11 +53,11 @@ export default async function BlogPost({ params }) {
       <div className="flex">
         <div className="flex-1 w-[70%]">
           <article className="pl-[150px]">
-            <header>
+            <header className="border-b">
               <h1 className="text-4xl font-bold">{blog.title}</h1>
               <div className="my-4">
                 {blog.subcategories.map((cat) => (
-                  <span key={cat.id} className="mr-2">
+                  <span key={cat.id} className="mr-2 text-gray-500">
                     {cat.name}
                   </span>
                 ))}
