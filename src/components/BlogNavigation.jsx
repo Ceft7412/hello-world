@@ -1,9 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const BlogNavigation = ({ headings }) => {
   const [activeId, setActiveId] = useState(null);
-
+  const darkTheme = useSelector((state) => state.theme.darkTheme);
   useEffect(() => {
     const handleScroll = () => {
       const sections = document.querySelectorAll("h2");
@@ -38,9 +39,9 @@ const BlogNavigation = ({ headings }) => {
             key={heading.id}
             className={`p-2 ${
               activeId === heading.id
-                ? "border-l-[3px] border-violet-500 bg-violet-200"
+                ? "border-l-[3px] border-violet-500 bg-violet-200 text-black"
                 : "border-l-[3px] border-gray-500"
-            }`}
+            } `}
           >
             <a
               href={`#${heading.id}`}
