@@ -26,10 +26,8 @@ export default async function BlogPost({ params }) {
     );
   }
 
-  // Add IDs to headings
   const dom = new JSDOM(blog.content);
   const document = dom.window.document;
-  console.log(document);
   const headings = document.querySelectorAll("h1, h2");
 
   headings.forEach((heading, index) => {
@@ -40,13 +38,11 @@ export default async function BlogPost({ params }) {
 
   const modifiedContent = document.body.innerHTML;
 
-  // Extract headings for navigation
   const navHeadings = Array.from(headings).map((heading) => ({
     id: heading.id,
     tagName: heading.tagName.toLowerCase(),
     text: heading.textContent,
   }));
-  console.log(navHeadings);
 
   return (
     <MainLayout>
