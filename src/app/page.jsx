@@ -9,14 +9,12 @@ export default async function Home({ searchParams }) {
   let categories = [];
   let blogs = [];
 
-  // Assigns the filter and search query parameters to the variables filter and search respectively
   const filter = searchParams.filter || "";
   const filterCategory = searchParams.category || "";
   const search = searchParams.search || "";
 
   try {
     categories = await fetchCategories();
-    // Fetches blogs based on the filter and search query parameters
     blogs = await fetchBlogs(filter, search, filterCategory);
   } catch (error) {
     console.error("Error fetching data:", error);
