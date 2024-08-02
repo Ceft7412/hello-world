@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 // import "./globals.css";
 import "@/resources/sass/styles.scss";
+import NextTopLoader from "nextjs-toploader";
 
 import Providers from "./provider";
 
@@ -16,6 +17,7 @@ export default function RootLayout({ children }) {
         <title>Hello, World!</title>
       </head>
       <body>
+        <NextTopLoader />
         <Providers>{children}</Providers>
       </body>
     </html>
