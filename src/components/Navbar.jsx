@@ -21,9 +21,21 @@ import Image from "next/image";
 function Navbar() {
   const dispatch = useDispatch();
   const darkTheme = useSelector((state) => state.theme.darkTheme);
+  console.log(darkTheme);
   const user = useSelector((state) => state.auth.user);
   const [isLogin, setIsLogin] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Load the theme before the application starts
+  useEffect(() => {
+    // Load the theme before the application starts
+    if (typeof window !== "undefined") {
+      const savedDarkTheme = JSON.parse(window.localStorage.getItem("darkTheme"));
+      if (savedDarkTheme !== null) {
+        dispatch(setTheme(savedDarkTheme));
+      }
+    }
+  }, [dispatch]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
