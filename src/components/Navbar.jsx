@@ -6,7 +6,7 @@ import WbSunnyRoundedIcon from "@mui/icons-material/WbSunnyRounded";
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 
 // Redux
-import { toggleTheme } from "@/redux/themeSlice";
+import { toggleTheme, setTheme } from "@/redux/themeSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 import Link from "next/link";
@@ -19,17 +19,71 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import Image from "next/image";
 
 function Navbar() {
-  const [isHovered, setIsHovered] = useState(false);
   const dispatch = useDispatch();
   const darkTheme = useSelector((state) => state.theme.darkTheme);
   const user = useSelector((state) => state.auth.user);
-
+  const [isLogin, setIsLogin] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Perform when dark theme changes
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (user) {
+      setIsLogin(true);
+      dispatch(setUser(user));
+    }
+  }, []);
+
   useEffect(() => {
     document.body.className = darkTheme ? "darkTheme" : "";
   }, [darkTheme]);
+
+  const handleTheme = () => {
+    dispatch(toggleTheme());
+    const currentTheme = darkTheme ? false : true;
+    localStorage.setItem("darkTheme", JSON.stringify(currentTheme));
+  };
+  const signInWithGoogle = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+
+      const userObj = {
+        name: result.user.displayName,
+        photo: result.user.photoURL,
+        token: result.user.accessToken,
+        uid: result.user.uid,
+      };
+      localStorage.setItem("user", JSON.stringify(userObj));
+      const userRef = doc(db, "users", result.user.uid);
+      const userSnap = await getDoc(userRef);
+
+      if (!userSnap.exists()) {
+        // If the user doesn't exist, create a new document with the user's ID as the document ID
+        await setDoc(userRef, {
+          name: result.user.displayName,
+          email: result.user.email,
+          photoURL: result.user.photoURL,
+          role: "user",
+        });
+      }
+      setIsLogin(true);
+      setIsModalOpen(false);
+      dispatch(setUser(userObj));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const logout = async () => {
+    try {
+      await signOut(auth);
+      localStorage.removeItem("user");
+      setIsLogin(false);
+      dispatch(clearUser());
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const modalVariant = {
     hidden: {
@@ -54,38 +108,6 @@ function Navbar() {
     },
   };
 
-  const signInWithGoogle = async () => {
-    try {
-      const result = await signInWithPopup(auth, googleProvider);
-      const userRef = doc(db, "users", result.user.uid);
-      const userSnap = await getDoc(userRef);
-
-      if (!userSnap.exists()) {
-        // If the user doesn't exist, create a new document with the user's ID as the document ID
-        await setDoc(userRef, {
-          name: result.user.displayName,
-          email: result.user.email,
-          photoURL: result.user.photoURL,
-          role: "user",
-          // Add any additional fields you want to store
-        });
-      }
-
-      dispatch(setUser(result.user));
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const logout = async () => {
-    try {
-      await signOut(auth);
-      dispatch(clearUser());
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   return (
     <header
       className={`header ${
@@ -101,7 +123,7 @@ function Navbar() {
 
         <nav className="header__nav-links ml-auto flex items-center gap-2">
           <div className="mr-6 flex items-center gap-5 ">
-            {user && (
+            {isLogin && (
               <div className="relative">
                 <div
                   onClick={() => setIsModalOpen(!isModalOpen)}
@@ -109,12 +131,13 @@ function Navbar() {
                 >
                   <Image
                     className="rounded-full"
-                    src={user.photoURL}
+                    src={user.photo}
                     alt={`${user.displayName} profile picture`}
                     width={40}
                     height={40}
                   />
                   <ExpandMoreRoundedIcon
+                    style={{ fontSize: ".9rem" }}
                     className={`absolute bg-gray-300  ${
                       darkTheme ? "bg-gray-900" : ""
                     } rounded-full text-[12px] right-[1px] bottom-0`}
@@ -144,7 +167,7 @@ function Navbar() {
               </div>
             )}
 
-            {!user && (
+            {!isLogin && (
               <span className="cursor-pointer" onClick={signInWithGoogle}>
                 Sign In
               </span>
@@ -152,7 +175,7 @@ function Navbar() {
           </div>
           <WbSunnyRoundedIcon
             className={`cursor-pointer transition-colors duration-300 ease-in-out  active:scale-105 hover:text-violet-900`}
-            onClick={() => dispatch(toggleTheme())}
+            onClick={() => handleTheme()}
           />
         </nav>
       </div>
