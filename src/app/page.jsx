@@ -11,18 +11,20 @@ export default async function Home({ searchParams }) {
 
   // Assigns the filter and search query parameters to the variables filter and search respectively
   const filter = searchParams.filter || "";
+  const filterCategory = searchParams.category || "";
   const search = searchParams.search || "";
+
   try {
     categories = await fetchCategories();
     // Fetches blogs based on the filter and search query parameters
-    blogs = await fetchBlogs(filter, search);
+    blogs = await fetchBlogs(filter, search, filterCategory);
   } catch (error) {
     console.error("Error fetching data:", error);
   }
 
   return (
     <MainLayout>
-      <div className="flex justify-between w-full">
+      <div className="flex flex-col gap-2 w-full  sm:flex-row justify-between">
         <Filter categories={categories} />
         <Search />
       </div>
