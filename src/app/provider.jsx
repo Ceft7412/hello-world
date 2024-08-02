@@ -3,7 +3,7 @@
 
 import { Provider } from "react-redux";
 import Mounth from "./mount";
-import store from "@/redux/store"; // Adjust the path based on your directory structure
+import store from "@/redux/store";
 
 const Providers = ({ children }) => {
   return (
