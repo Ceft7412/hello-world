@@ -9,6 +9,7 @@ import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import { toggleTheme } from "@/redux/themeSlice";
 import { useDispatch, useSelector } from "react-redux";
 
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { signInWithPopup, signOut } from "firebase/auth";
@@ -89,26 +90,32 @@ function Navbar() {
     <header
       className={`header ${
         darkTheme ? "bg-gray-950 shadow-xl" : "shadow bg-white"
-      } fixed  z-20 top-0 left-0 right-0 h-[50px] `}
+      } fixed  z-20 top-0 left-0 right-0 h-[50px] min-w-80`}
     >
-      <div className="header__flex  relative flex  w-full h-full justify-between items-center px-16">
-        <div className="header__logo absolute left-[50%] -translate-x-2/4">
-          HELLO, <span className="logo__world">WORLD!</span>
+      <div className="header__flex  relative flex  w-full h-full justify-between items-center p-2 sm:px-16">
+        <div className="header__logo sm:absolute sm:left-[50%] sm:-translate-x-2/4 text-[20px]  whitespace-nowrap">
+          <Link href="/">
+            HELLO, <span className="logo__world">WORLD!</span>
+          </Link>
         </div>
+
         <nav className="header__nav-links ml-auto flex items-center gap-2">
           <div className="mr-6 flex items-center gap-5 ">
             {user && (
               <div className="relative">
-                <div onClick={() => setIsModalOpen(!isModalOpen)}>
+                <div
+                  onClick={() => setIsModalOpen(!isModalOpen)}
+                  className="active:scale-105 cursor-pointer"
+                >
                   <Image
                     className="rounded-full"
                     src={user.photoURL}
-                    alt={user.name}
+                    alt={`${user.displayName} profile picture`}
                     width={40}
                     height={40}
                   />
                   <ExpandMoreRoundedIcon
-                    className={`absolute bg-gray-300 ${
+                    className={`absolute bg-gray-300  ${
                       darkTheme ? "bg-gray-900" : ""
                     } rounded-full text-[12px] right-[1px] bottom-0`}
                   />
@@ -144,7 +151,7 @@ function Navbar() {
             )}
           </div>
           <WbSunnyRoundedIcon
-            className={`cursor-pointer transition-colors duration-300 ease-in-out  hover:text-violet-900`}
+            className={`cursor-pointer transition-colors duration-300 ease-in-out  active:scale-105 hover:text-violet-900`}
             onClick={() => dispatch(toggleTheme())}
           />
         </nav>
