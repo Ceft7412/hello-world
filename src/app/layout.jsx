@@ -17,7 +17,7 @@ export default function RootLayout({ children }) {
         <title>Hello, World!</title>
       </head>
       <body>
-        <NextTopLoader />
+        <NextTopLoader color="purple" />
         <Providers>{children}</Providers>
       </body>
     </html>
