@@ -46,9 +46,9 @@ export default async function BlogPost({ params }) {
 
   return (
     <MainLayout>
-      <div className="flex">
-        <div className="flex-1 w-[70%]">
-          <article className="pl-[150px]">
+      <div className="flex w-[80%] xl:pr-[250px]">
+        <div className="flex-1">
+          <article className="">
             <header className="border-b">
               <h1 className="text-4xl font-bold">{blog.title}</h1>
               <div className="my-4">
@@ -66,11 +66,10 @@ export default async function BlogPost({ params }) {
             />
           </article>
         </div>
-        <div className="w-[30%]">
-          <aside className="fixed right-10 w-[350px] ml-8 h-[300px]">
-            <BlogNavigation headings={navHeadings} />
-          </aside>
-        </div>
+
+        <aside className="fixed hidden xl:block right-10 w-[350px] ml-8 h-[300px]">
+          <BlogNavigation headings={navHeadings} />
+        </aside>
       </div>
     </MainLayout>
   );

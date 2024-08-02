@@ -9,8 +9,6 @@ const BlogNavigation = ({ headings }) => {
     const handleScroll = () => {
       const sections = document.querySelectorAll("h2");
       const scrollPosition = window.scrollY + window.innerHeight / 2;
-      console.log(window.scrollY);
-      console.log(window.innerHeight);
       let activeSection;
       for (const section of sections) {
         const sectionTop = section.offsetTop;

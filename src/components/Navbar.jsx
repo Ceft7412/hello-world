@@ -21,7 +21,6 @@ import Image from "next/image";
 function Navbar() {
   const dispatch = useDispatch();
   const darkTheme = useSelector((state) => state.theme.darkTheme);
-  console.log(darkTheme);
   const user = useSelector((state) => state.auth.user);
   const [isLogin, setIsLogin] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
