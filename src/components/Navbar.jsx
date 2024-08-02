@@ -26,10 +26,12 @@ function Navbar() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (user) {
-      setIsLogin(true);
-      dispatch(setUser(user));
+    if (typeof window !== "undefined") {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (user) {
+        setIsLogin(true);
+        dispatch(setUser(user));
+      }
     }
   }, []);
 
@@ -40,7 +42,9 @@ function Navbar() {
   const handleTheme = () => {
     dispatch(toggleTheme());
     const currentTheme = darkTheme ? false : true;
-    localStorage.setItem("darkTheme", JSON.stringify(currentTheme));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("darkTheme", JSON.stringify(currentTheme));
+    }
   };
   const signInWithGoogle = async () => {
     try {
@@ -52,7 +56,9 @@ function Navbar() {
         token: result.user.accessToken,
         uid: result.user.uid,
       };
-      localStorage.setItem("user", JSON.stringify(userObj));
+      if (typeof window !== "undefined") {
+        localStorage.setItem("user", JSON.stringify(userObj));
+      }
       const userRef = doc(db, "users", result.user.uid);
       const userSnap = await getDoc(userRef);
 
@@ -76,7 +82,9 @@ function Navbar() {
   const logout = async () => {
     try {
       await signOut(auth);
-      localStorage.removeItem("user");
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("user");
+      }
       setIsLogin(false);
       dispatch(clearUser());
     } catch (error) {
