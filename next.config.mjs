@@ -1,3 +1,5 @@
+import withFonts from 'next-fonts';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -5,4 +7,4 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+export default withFonts(nextConfig);
