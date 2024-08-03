@@ -5,6 +5,9 @@ import BlogNavigation from "@/components/BlogNavigation";
 import { JSDOM } from "jsdom";
 import Like from "@/components/Like";
 import LikesCount from "@/components/LikesCount";
+import Comment from "@/components/Comment";
+import Comments from "@/components/Comments";
+
 export default async function BlogPost({ params }) {
   const { title } = params;
   let blogs = [];
@@ -53,7 +56,7 @@ export default async function BlogPost({ params }) {
 
   return (
     <MainLayout>
-      <div className="flex p-1 sm:w-[80%] xl:pr-[250px]">
+      <section className="flex p-1 sm:w-[80%] xl:pr-[250px]">
         <div className="flex-1">
           <article className="">
             <header className="border-b">
@@ -83,14 +86,17 @@ export default async function BlogPost({ params }) {
         <aside className="fixed hidden xl:block right-10 w-[350px] ml-8 h-[300px]">
           <BlogNavigation headings={navHeadings} />
         </aside>
-      </div>
-      <div className="flex flex-col">
+      </section>
+      <section className="flex flex-col items-center justify-center w-full">
         <div className="flex flex-col items-center">
           <Like blog={blog} />
           <LikesCount blog={blog} />
         </div>
-        <div className=""></div>
-      </div>
+        <div className="w-[60%] flex flex-col">
+          <Comment blog={blog} />
+          <Comments blog={blog} />
+        </div>
+      </section>
     </MainLayout>
   );
 }

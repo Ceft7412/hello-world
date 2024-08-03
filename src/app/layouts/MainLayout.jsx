@@ -44,18 +44,16 @@ function MainLayout({ children }) {
         <Footer />
       </div>
       {message && (
-        <div className="fixed bottom-20 left-0 right-0 flex justify-center">
-          <div className="px-4 py-2 bg-violet-500 text-white text-[20px] rounded font-medium">
-            Welcome, {isUser.name}!
-            <SentimentSatisfiedRoundedIcon />
+        <div className="fixed bottom-16 sm:bottom-20 left-0 right-0 flex justify-center">
+          <div className="px-4 py-2 bg-violet-500 text-white text-[15px] sm:text-[20px] rounded font-medium">
+            Welcome, {isUser.name}! <SentimentSatisfiedRoundedIcon />
           </div>
         </div>
       )}
       {logoutMessage && (
-        <div className="fixed bottom-20 left-0 right-0 flex justify-center">
-          <div className="px-4 py-2 bg-violet-500 text-white text-[20px] rounded font-medium">
-            You have successfully logged out!
-            <SentimentSatisfiedRoundedIcon />
+        <div className="fixed bottom-8 sm:bottom-20 left-0 right-0 flex justify-center">
+          <div className="px-4 py-2 bg-violet-500 text-white text-[15px] sm:text-[20px] rounded font-medium">
+            You have successfully logged out! <SentimentSatisfiedRoundedIcon />
           </div>
         </div>
       )}

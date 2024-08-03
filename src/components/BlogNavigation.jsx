@@ -31,7 +31,7 @@ const BlogNavigation = ({ headings }) => {
 
   return (
     <nav>
-      <ul>
+      <ul className={`${darkTheme ? "bg-[#1a202c]" : "bg-white"}`}>
         {headings.map((heading) => (
           <li
             key={heading.id}
