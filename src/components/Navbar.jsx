@@ -7,10 +7,10 @@ import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 
 // Redux
 import { toggleTheme, setTheme } from "@/redux/themeSlice";
+import { openModal, closeModal } from "@/redux/modalSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
 
 import { signInWithPopup, signOut } from "firebase/auth";
 import { auth, googleProvider, db } from "@/firebase/firebase";
@@ -18,10 +18,14 @@ import { setUser } from "@/redux/authSlice";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import Image from "next/image";
 
-function Navbar() {
+import ProfileModal from "./Modals/ProfileModal";
+
+function Navbar({ setMessage, setIsUser, setLogoutMessage }) {
   const dispatch = useDispatch();
   const darkTheme = useSelector((state) => state.theme.darkTheme);
   const user = useSelector((state) => state.auth.user);
+  const nameModal = useSelector((state) => state.modal.nameModal);
+  const modalShow = useSelector((state) => state.modal.modalShow);
   const [isLogin, setIsLogin] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -82,48 +86,14 @@ function Navbar() {
           role: "user",
         });
       }
+      setMessage(true);
+      setIsUser(userObj);
       setIsLogin(true);
       setIsModalOpen(false);
       dispatch(setUser(userObj));
     } catch (error) {
       console.error(error);
     }
-  };
-
-  const logout = async () => {
-    try {
-      await signOut(auth);
-      if (typeof window !== "undefined") {
-        window.localStorage.removeItem("user");
-      }
-      setIsLogin(false);
-      dispatch(clearUser());
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const modalVariant = {
-    hidden: {
-      opacity: 0,
-      scale: 0.5,
-    },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 0.1,
-        // type: "spring",
-        // stiffness: 120,
-      },
-    },
-    exit: {
-      opacity: 0,
-      scale: 0.5,
-      transition: {
-        duration: 0.1,
-      },
-    },
   };
 
   return (
@@ -144,7 +114,16 @@ function Navbar() {
             {isLogin && (
               <div className="relative">
                 <div
-                  onClick={() => setIsModalOpen(!isModalOpen)}
+                  onClick={(event) => {
+                    if (!modalShow) {
+                      event.stopPropagation();
+                    }
+                    if (nameModal !== "profile-modal") {
+                      dispatch(openModal("profile-modal"));
+                    } else {
+                      dispatch(closeModal());
+                    }
+                  }}
                   className="active:scale-105 cursor-pointer"
                 >
                   <Image
@@ -160,28 +139,12 @@ function Navbar() {
                       darkTheme ? "bg-gray-900" : ""
                     } rounded-full text-[12px] right-[1px] bottom-0`}
                   />
+                  <ProfileModal
+                    user={user}
+                    setIsLogin={setIsLogin}
+                    setLogoutMessage={setLogoutMessage}
+                  />
                 </div>
-
-                <AnimatePresence>
-                  {isModalOpen && (
-                    <motion.div
-                      className={`modal-out  ${
-                        darkTheme ? "bg-gray-950" : "bg-white"
-                      } rounded absolute shadow-md right-0`}
-                      variants={modalVariant}
-                      initial="hidden"
-                      animate="visible"
-                      exit="exit"
-                    >
-                      <p
-                        className="p-2 whitespace-nowrap cursor-pointer hover:bg-sky-300/[.06]"
-                        onClick={user ? logout : null}
-                      >
-                        Sign out
-                      </p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
               </div>
             )}
 
