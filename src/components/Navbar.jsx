@@ -150,7 +150,7 @@ function Navbar({ setMessage, setIsUser, setLogoutMessage }) {
 
             {!isLogin && (
               <span className="cursor-pointer" onClick={signInWithGoogle}>
-                Sign In
+                Sign in
               </span>
             )}
           </div>
