@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { auth } from "@/firebase/firebase";
 
 export default function Like({ blog }) {
-  const dispatch = useDispatch();   
+  const dispatch = useDispatch();
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
   const [liked, setLiked] = useState(false);
@@ -63,12 +63,12 @@ export default function Like({ blog }) {
     <>
       {liked ? (
         <FavoriteRoundedIcon
-          className="cursor-pointer text-[40px]"
+          className="cursor-pointer text-[30px] sm:text-[40px]"
           onClick={handleLike}
         />
       ) : (
         <FavoriteBorderRoundedIcon
-          className="cursor-pointer text-[40px]"
+          className="cursor-pointer text-[30px] sm:text-[40px]"
           onClick={handleLike}
         />
       )}
