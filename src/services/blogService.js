@@ -12,7 +12,7 @@ export const fetchBlogs = async (
   const blogsCollection = collection(db, "blogs");
   // Fetches all documents from the blogs collection
   const documents = await getDocs(blogsCollection);
-  let blogs = []; 
+  let blogs = [];
 
   // Iterates over each blog document in the collection
   documents.forEach((doc) => {
