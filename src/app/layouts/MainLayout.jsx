@@ -45,7 +45,7 @@ function MainLayout({ children }) {
       </div>
       {message && (
         <div className="fixed bottom-20 left-0 right-0 flex justify-center">
-          <div className="px-4 py-2 bg-violet-500 text-white font-mono text-[20px] rounded font-medium">
+          <div className="px-4 py-2 bg-violet-500 text-white text-[20px] rounded font-medium">
             Welcome, {isUser.name}!
             <SentimentSatisfiedRoundedIcon />
           </div>
@@ -53,7 +53,7 @@ function MainLayout({ children }) {
       )}
       {logoutMessage && (
         <div className="fixed bottom-20 left-0 right-0 flex justify-center">
-          <div className="px-4 py-2 bg-violet-500 text-white font-mono text-[20px] rounded font-medium">
+          <div className="px-4 py-2 bg-violet-500 text-white text-[20px] rounded font-medium">
             You have successfully logged out!
             <SentimentSatisfiedRoundedIcon />
           </div>
