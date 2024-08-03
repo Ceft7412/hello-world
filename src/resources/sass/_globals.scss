@@ -7,9 +7,9 @@
 
 body {
   transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-  font-family: "Figtree", Arial, Helvetica, sans-serif;
+  font-family: "Times New Roman", Arial, Helvetica, sans-serif;
   &.darkTheme {
-    background-color: rgb(17 24 39);
+    background-color: #1a202c;
     color: white;
   }
 }
