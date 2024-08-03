@@ -61,7 +61,7 @@ export default async function BlogPost({ params }) {
               <div className="my-4 flex flex-col">
                 <span className="">By {blog.author}</span>
                 <span>
-                  {month} {day} {year}
+                  {month} {day}, {year}
                 </span>
                 <div className="mt-2">
                   {blog.subcategories.map((cat) => (
