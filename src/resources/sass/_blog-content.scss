@@ -5,13 +5,20 @@
   }
   h2 {
     font-weight: 800;
-    font-size: 2.2em;
+    font-size: 1.8em;
     margin: 40px 0 10px 0;
+    @media (min-width: 640px) {
+      font-size: 2.2em;
+    }
   }
   p {
-    margin: 0 0 80px 0;
     font-weight: 500;
-    font-size: 1.3em;
+    font-size: 1.1em;
     word-spacing: 0.2em;
+    margin: 20px 0 40px 0;
+    @media (min-width: 640px) {
+      font-size: 1.3em;
+      margin: 20px 0 80px 0;
+    }
   }
 }
