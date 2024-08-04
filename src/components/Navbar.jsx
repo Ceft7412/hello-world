@@ -78,7 +78,6 @@ function Navbar({ setMessage, setIsUser, setLogoutMessage }) {
       const userSnap = await getDoc(userRef);
 
       if (!userSnap.exists()) {
-        // If the user doesn't exist, create a new document with the user's ID as the document ID
         await setDoc(userRef, {
           name: result.user.displayName,
           email: result.user.email,
