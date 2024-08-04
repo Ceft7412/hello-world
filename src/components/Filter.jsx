@@ -37,10 +37,8 @@ function Filter({ categories }) {
     <div className="relative w-full sm:w-auto">
       <div className="flex flex-col-reverse sm:flex-row gap-2 w-full ">
         <div
-          className={`w-full sm:w-48 ring-1  h-10 text-gray-600 p-1 px-2 flex justify-between items-center rounded-xl w-[220px]  cursor-pointer text-black ${
-            darkTheme
-              ? "bg-gray-950 text-white ring-gray-950 "
-              : "bg-gray-200 ring-gray-300"
+          className={`w-full sm:w-48 h-10 text-gray-600 p-1 px-2 flex justify-between items-center rounded-xl w-[220px]  cursor-pointer text-black ${
+            darkTheme ? "text-white  " : " "
           }`}
           onClick={(event) => {
             if (!modalShow) {
