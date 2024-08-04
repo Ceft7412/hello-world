@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 const BlogNavigation = ({ headings }) => {
-  const [activeId, setActiveId] = useState(null);
+  const [activeId, setActiveId] = useState(headings[0]?.id);
   const darkTheme = useSelector((state) => state.theme.darkTheme);
   useEffect(() => {
     const handleScroll = () => {
