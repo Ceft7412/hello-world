@@ -33,6 +33,10 @@ function Comment({ blog }) {
       setUserMessage("You must be logged in to add a comment.");
       return;
     }
+    if (user && newComment.trim() === "") {
+      setUserMessage("Comment cannot be empty.");
+      return;
+    }
 
     // Call the imported function
     await addCommentToDb(
@@ -62,7 +66,7 @@ function Comment({ blog }) {
           <div className="self-end flex gap-5">
             {newComment && (
               <button
-                className="p-2 hover:bg-gray-200 rounded-md"
+                className="p-2 hover:bg-gray-200 rounded-md hover:text-black"
                 type="button"
                 onClick={() => setNewComment("")}
               >
