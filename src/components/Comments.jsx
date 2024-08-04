@@ -16,6 +16,7 @@ export default function Comments({ blog }) {
   const [comments, setComments] = React.useState([]);
   const [user, setUser] = useState(null);
   const [confirmationMessage, setConfirmationMessage] = useState(false);
+  const [idModal, setIdModal] = useState({ commentId: "", uid: "" });
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -37,7 +38,8 @@ export default function Comments({ blog }) {
     return () => unsubscribe();
   }, [blog.id]);
 
-  const confirmation = (commentId) => {
+  const confirmation = (commentId, userId) => {
+    setIdModal({ commentId: commentId, uid: userId });
     setConfirmationMessage(true);
   };
   const deleteComment = async (commentId) => {
@@ -68,52 +70,54 @@ export default function Comments({ blog }) {
                   {user && user.uid === comment.userId && (
                     <DeleteRoundedIcon
                       className="cursor-pointer"
-                      onClick={confirmation}
+                      onClick={() => confirmation(comment.id, user.uid)}
                     />
                   )}
-                  {confirmationMessage && (
-                    <div
-                      className="fixed flex items-center justify-center top-0 left-0 right-0 bottom-0 z-50 bg-gray-1/2"
-                      onClick={() => setConfirmationMessage("")}
-                    >
+                  {confirmationMessage &&
+                    idModal.uid === comment.userId &&
+                    idModal.commentId === comment.id && (
                       <div
-                        className="w-[300px] sm:w-[400px] p-2 rounded-md bg-white border text-black"
-                        onClick={(e) => e.stopPropagation()}
+                        className="fixed flex items-center justify-center top-0 left-0 right-0 bottom-0 z-50 bg-gray-1/2"
+                        onClick={() => setConfirmationMessage("")}
                       >
-                        <div className="heading-modal flex justify-end w-full mb-2">
-                          <CloseRoundedIcon
-                            className="p-1 hover:bg-gray-100 rounded-full text-[30px] cursor-pointer"
-                            onClick={() => setConfirmationMessage(false)}
-                          />
-                        </div>
-                        <div className="body-modal px-4">
-                          <h2 className="text-center text-[25px] font-bold mb-2">
-                            Are you sure?
-                          </h2>
-                          <p className="text-center text-[15px]">
-                            Are you sure you want to delete this comment? This action
-                            cannot be undone.
-                          </p>
-                        </div>
-                        <div className="footer-modal flex gap-2 items-center justify-center mt-6 mb-6">
-                          <button
-                            type="button"
-                            className="w-[150px] rounded-md border-2 border-black p-2 hover:bg-gray-100"
-                            onClick={() => setConfirmationMessage(false)}
-                          >
-                            Cancel
-                          </button>
-                          <button
-                            type="button"
-                            className="text-white w-[150px] rounded-md  border border-red-500 bg-red-500 p-2 hover:bg-red-600"
-                            onClick={() => deleteComment(comment.id)}
-                          >
-                            Delete
-                          </button>
+                        <div
+                          className="w-[300px] sm:w-[400px] p-2 rounded-md bg-white border text-black"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <div className="heading-modal flex justify-end w-full mb-2">
+                            <CloseRoundedIcon
+                              className="p-1 hover:bg-gray-100 rounded-full text-[30px] cursor-pointer"
+                              onClick={() => setConfirmationMessage(false)}
+                            />
+                          </div>
+                          <div className="body-modal px-4">
+                            <h2 className="text-center text-[25px] font-bold mb-2">
+                              Are you sure?
+                            </h2>
+                            <p className="text-center text-[15px]">
+                              Are you sure you want to delete this comment? This action
+                              cannot be undone.
+                            </p>
+                          </div>
+                          <div className="footer-modal flex gap-2 items-center justify-center mt-6 mb-6">
+                            <button
+                              type="button"
+                              className="w-[150px] rounded-md border-2 border-black p-2 hover:bg-gray-100"
+                              onClick={() => setConfirmationMessage(false)}
+                            >
+                              Cancel
+                            </button>
+                            <button
+                              type="button"
+                              className="text-white w-[150px] rounded-md  border border-red-500 bg-red-500 p-2 hover:bg-red-600"
+                              onClick={() => deleteComment(comment.id)}
+                            >
+                              Delete
+                            </button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  )}
+                    )}
                 </div>
 
                 <span className="text-[15px] text-gray-500 font-thin">
