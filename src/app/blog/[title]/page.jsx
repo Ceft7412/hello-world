@@ -83,16 +83,16 @@ export default async function BlogPost({ params }) {
           </article>
         </div>
 
-        <aside className="fixed hidden xl:block right-10 w-[350px] ml-8 h-[300px]">
+        <aside className="fixed hidden xl:block right-10 w-[300px ] ml-8 h-[300px]">
           <BlogNavigation headings={navHeadings} />
         </aside>
       </section>
-      <section className="flex flex-col items-center justify-center w-full">
+      <section className="flex flex-col items-center justify-center w-full sm:pr-20">
         <div className="flex flex-col items-center">
           <Like blog={blog} />
           <LikesCount blog={blog} />
         </div>
-        <div className="w-[60%] flex flex-col">
+        <div className="sm:w-[60%] flex flex-col">
           <Comment blog={blog} />
           <Comments blog={blog} />
         </div>
