@@ -73,7 +73,7 @@ export default function Like({ blog }) {
         />
       )}
       {error ? (
-        <p className="fixed bottom-20 z-50 bg-red-500 font-medium p-4 w-[350px] text-center text-white rounded-md ">
+        <p className="fixed bottom-10 z-50 bg-red-500 font-medium px-4 py-2 text-[15px] w-[300px] text-center text-white rounded-md ">
           {error}
         </p>
       ) : null}
