@@ -2,20 +2,16 @@
 import React from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import Modal from "@/components/Modals/Modal";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { closeModal } from "@/redux/modalSlice";
-import { auth } from "@/firebase/firebase";
 import { useEffect, useState } from "react";
 import SentimentSatisfiedRoundedIcon from "@mui/icons-material/SentimentSatisfiedRounded";
 
 function MainLayout({ children }) {
   const dispatch = useDispatch();
   const [isUser, setIsUser] = useState(null);
-  console.log(isUser);
   const [message, setMessage] = useState(null);
   const [logoutMessage, setLogoutMessage] = useState(null);
-  console.log(message);
 
   useEffect(() => {
     if (message && isUser) {
