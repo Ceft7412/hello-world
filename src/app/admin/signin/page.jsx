@@ -2,37 +2,75 @@
 import React from "react";
 
 import AuthLayout from "@/app/layouts/AuthLayout";
-import { signInWithPopup, signOut } from "firebase/auth";
+import { signInWithPopup, signOut, onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, googleProvider, db } from "@/firebase/firebase";
 
 // To Navigate to a different page
 import { useRouter } from "next/navigation";
-
+import { useDispatch } from "react-redux";
+import { setUser } from "@/redux/authSlice";
+import { useState, useEffect } from "react";
 function Signin() {
   const router = useRouter();
+  const dispatch = useDispatch();
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        setLoading(true);
+        // Fetch the user's document from the 'users' collection
+        const userDoc = doc(db, "users", user.uid);
+        const userSnapshot = await getDoc(userDoc);
+
+        // Check the user's role
+        if (userSnapshot.exists()) {
+          if (userSnapshot.data().role === "admin") {
+            // Redirect the user to the admin dashboard if they are an admin
+            router.push("/admin/dashboard");
+          } else {
+            // Sign out and redirect the user if they are not an admin
+            await signOut(auth);
+            router.push("/");
+          }
+        }
+        setLoading(false);
+      }
+    });
+
+    // Clean up the onAuthStateChanged listener when the component is unmounted
+    return unsubscribe;
+  }, []);
+
   const handleGoogleSignin = async () => {
     try {
+      setLoading(true);
       const result = await signInWithPopup(auth, googleProvider);
-      const user = result.user;
-      console.log(user);
-
-      // Fetch the user's document from the 'users' collection
-      const userDoc = doc(db, "users", user.uid);
-      console.log(userDoc);
-      const userSnapshot = await getDoc(userDoc);
-      console.log(userSnapshot);
-
-      // Redirect the user if their role is not 'admin'
-      if (userSnapshot.exists() && userSnapshot.data().role !== "admin") {
-        console.log("You are not an admin");
-        await signOut(auth);
-        router.push("/");
+      const userObj = {
+        name: result.user.displayName,
+        photo: result.user.photoURL,
+        token: result.user.accessToken,
+        uid: result.user.uid,
+      };
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem("user", JSON.stringify(userObj));
       }
+      dispatch(setUser(userObj));
     } catch (error) {
-      console.error(error);
+      setMessage("Oops! Something went wrong.");
+      setLoading(false);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <span>Loading...</span>
+      </div>
+    );
+  }
   return (
     <AuthLayout>
       <section className="whitespace-nowrap mb-10">
@@ -74,6 +112,7 @@ function Signin() {
           <p className="text-center flex-1">Sign in with Google</p>
         </div>
       </section>
+      {/* <section className="text-center">{message}</section> */}
     </AuthLayout>
   );
 }
