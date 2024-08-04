@@ -41,10 +41,10 @@ function Search() {
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
         placeholder="Search blogs..."
-        className={`w-full sm:w-auto p-1 px-2 pr-10 h-10 w-[250px] border outline-none rounded-xl ${
+        className={`w-full sm:w-auto p-1 px-2 pr-10 h-10 w-[250px] border-b-2  outline-none  ${
           darkTheme
-            ? "bg-gray-950 text-white border-gray-700"
-            : "bg-gray-200 text-black border-gray-400"
+            ? "bg-[#1a202c] text-white border-gray-700"
+            : "text-black border-gray-400"
         }`}
       />
     </form>
