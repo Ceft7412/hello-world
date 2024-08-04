@@ -92,7 +92,7 @@ export default async function BlogPost({ params }) {
           <Like blog={blog} />
           <LikesCount blog={blog} />
         </div>
-        <div className="sm:w-[60%] flex flex-col">
+        <div className="w-[100%] sm:w-[60%] flex flex-col">
           <Comment blog={blog} />
           <Comments blog={blog} />
         </div>
