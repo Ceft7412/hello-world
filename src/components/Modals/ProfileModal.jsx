@@ -1,15 +1,17 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { auth } from "@/firebase/firebase";
+import { auth, db } from "@/firebase/firebase";
 import { signOut } from "firebase/auth";
 import { clearUser } from "@/redux/authSlice";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
-
+import { useRouter } from "next/navigation";
 export default function ProfileModal({ user, setIsLogin, setLogoutMessage }) {
   const dispatch = useDispatch();
+  const router = useRouter();
   const nameModal = useSelector((state) => state.modal.nameModal);
   const modalShow = useSelector((state) => state.modal.modalShow);
-  const darkTheme = useSelector((state) => state.theme.darkTheme);
+  const themeColor = useSelector((state) => state.theme.themeColor);
 
   const modalVariant = {
     hidden: {
@@ -36,7 +38,17 @@ export default function ProfileModal({ user, setIsLogin, setLogoutMessage }) {
 
   const logout = async () => {
     try {
-      await signOut(auth);
+      const userDoc = doc(db, "users", user.uid);
+      const userSnapshot = await getDoc(userDoc);
+
+      if (userSnapshot.exists() && userSnapshot.data().role !== "admin") {
+        await signOut(auth);
+        router.push("/");
+      } else {
+        await signOut(auth);
+        router.push("/admin/signin");
+      }
+
       if (typeof window !== "undefined") {
         window.localStorage.removeItem("user");
       }
@@ -52,7 +64,7 @@ export default function ProfileModal({ user, setIsLogin, setLogoutMessage }) {
       {modalShow && nameModal === "profile-modal" && (
         <motion.div
           className={`modal-out  ${
-            darkTheme ? "bg-gray-950" : "bg-white"
+            themeColor === "dark" ? "bg-gray-950" : "bg-white"
           } rounded absolute shadow-md right-0`}
           variants={modalVariant}
           initial="hidden"
