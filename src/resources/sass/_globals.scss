@@ -4,12 +4,16 @@
   box-sizing: border-box;
   scroll-behavior: smooth;
 }
-
-body {
-  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-  font-family: "Acre", "Times New Roman", sans-serif;
-  &.darkTheme {
+html {
+  &.dark {
     background-color: #1a202c;
     color: white;
   }
+  &.light {
+    background-color: white;
+  }
+}
+
+body {
+  font-family: "Acre", "Times New Roman", sans-serif;
 }
