@@ -2,9 +2,8 @@
 import Link from "next/link";
 import Category from "@/components/Category";
 import Empty from "./Empty";
-import CardContainer from "./CardContainer";
 import { slugify } from "@/utils/slugify";
-
+import { useSelector } from "react-redux";
 export default function Card({ darkTheme, blogs }) {
   if (!blogs.length) {
     return <Empty>No results found.</Empty>;
@@ -33,3 +32,19 @@ export default function Card({ darkTheme, blogs }) {
     </>
   );
 }
+
+function CardContainer({ children }) {
+  const darkTheme = useSelector((state) => state.theme.darkTheme);
+  return (
+    <section
+      className={`border-b-[3px] sm:h-70 sm:hover:scale-105
+   transition-transform duration-[220ms] px-2 sm:px-6 py-2 sm:hover:shadow-xl sm:hover:rounded-md ${
+     darkTheme ? "hover:bg-gray-950 border-gray-700" : "border-gray-200"
+   } overflow-y-auto`}
+    >
+      {children}
+    </section>
+  );
+}
+
+export { CardContainer };
