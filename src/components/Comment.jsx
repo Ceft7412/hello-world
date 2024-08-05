@@ -8,7 +8,7 @@ function Comment({ blog }) {
   const [user, setUser] = useState(null);
   const [newComment, setNewComment] = useState("");
   const [userMessage, setUserMessage] = useState("");
-  const darkTheme = useSelector((state) => state.theme.darkTheme);
+  const themeColor = useSelector((state) => state.theme.themeColor);
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user);
@@ -60,7 +60,7 @@ function Comment({ blog }) {
             onChange={(e) => setNewComment(e.target.value)}
             placeholder="Add a comment..."
             className={`${
-              darkTheme ? "bg-[#1a202c]" : " "
+              themeColor === "dark" ? "bg-[#1a202c]" : " "
             } border p-2 w-full resize-none h-32 rounded-md`}
           />
           <div className="self-end flex gap-5">
