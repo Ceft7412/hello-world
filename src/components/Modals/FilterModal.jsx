@@ -14,12 +14,9 @@ import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 
 export default function FilterModal({ setHasQueryParams, setTextDisplay, categories }) {
   const dispatch = useDispatch();
-  const darkTheme = useSelector((state) => state.theme.darkTheme);
+  const themeColor = useSelector((state) => state.theme.themeColor);
   const nameModal = useSelector((state) => state.modal.nameModal);
   const modalShow = useSelector((state) => state.modal.modalShow);
-  console.log(modalShow);
-  console.log(nameModal);
-
   const [showModal, setShowModal] = React.useState(false);
   console.log(showModal);
   const router = useRouter();
@@ -61,7 +58,7 @@ export default function FilterModal({ setHasQueryParams, setTextDisplay, categor
       >
         <div
           className={`flex flex-col ${
-            darkTheme ? "bg-gray-950" : "bg-white text-gray-700"
+            themeColor === "dark" ? "bg-gray-950" : "bg-white text-gray-700"
           }`}
         >
           {categories.map((category) => (
@@ -69,7 +66,7 @@ export default function FilterModal({ setHasQueryParams, setTextDisplay, categor
               onMouseEnter={() => setShowModal(category.id)}
               onMouseLeave={() => setShowModal(null)}
               className={`${
-                darkTheme ? "hover:bg-gray-900" : " hover:bg-gray-200"
+                themeColor === "dark" ? "hover:bg-gray-900" : " hover:bg-gray-200"
               } relative flex flex-col sm:justify-between text-sm`}
               key={category.id}
             >
@@ -101,7 +98,7 @@ export default function FilterModal({ setHasQueryParams, setTextDisplay, categor
               {showModal === category.id && category.subcategories.length > 0 && (
                 <div
                   className={`${
-                    darkTheme ? "bg-gray-950" : "bg-white text-gray-700"
+                    themeColor === "dark" ? "bg-gray-950" : "bg-white text-gray-700"
                   } w-full sm:w-48 sm:absolute sm:left-full sm:-top-1 sm:mt-2  sm:rounded-md sm:shadow-lg sm:ring-1 sm:ring-black sm:ring-opacity-5`}
                 >
                   <div
@@ -114,7 +111,9 @@ export default function FilterModal({ setHasQueryParams, setTextDisplay, categor
                         key={subcategory.id}
                         href="#"
                         className={`block px-4 py-2 text-sm ${
-                          darkTheme ? "hover:bg-gray-900" : "hover:bg-gray-100"
+                          themeColor === "dark"
+                            ? "hover:bg-gray-900"
+                            : "hover:bg-gray-100"
                         } `}
                         role="menuitem"
                         onClick={() =>
