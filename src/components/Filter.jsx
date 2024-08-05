@@ -3,19 +3,15 @@ import React from "react";
 import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
 import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded";
 import { useSelector, useDispatch } from "react-redux";
-
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import Modal from "./Modals/Modal";
 import { openModal, closeModal, setModalName } from "@/redux/modalSlice";
-
-import ModalContainer from "./Modals/ModalContainer";
 import FilterModal from "./Modals/FilterModal";
 
 function Filter({ categories }) {
   const dispatch = useDispatch();
   const router = useRouter();
-  const darkTheme = useSelector((state) => state.theme.darkTheme);
+  const themeColor = useSelector((state) => state.theme.themeColor);
   const nameModal = useSelector((state) => state.modal.nameModal);
   const modalShow = useSelector((state) => state.modal.modalShow);
   const [textDisplay, setTextDisplay] = React.useState("All Categories");
@@ -38,7 +34,7 @@ function Filter({ categories }) {
       <div className="flex flex-col-reverse sm:flex-row gap-2 w-full ">
         <div
           className={`w-full sm:w-48 h-10 text-gray-600 p-1 px-2 flex justify-between items-center rounded-xl w-[220px]  cursor-pointer text-black ${
-            darkTheme ? "text-white  " : " "
+            themeColor === "dark" ? "text-white  " : " "
           }`}
           onClick={(event) => {
             if (!modalShow) {
