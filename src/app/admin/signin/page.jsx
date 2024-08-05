@@ -14,40 +14,55 @@ import { useState, useEffect } from "react";
 function Signin() {
   const router = useRouter();
   const dispatch = useDispatch();
+  const [signInUser, setSignInUser] = useState(null);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        setLoading(true);
-        // Fetch the user's document from the 'users' collection
-        const userDoc = doc(db, "users", user.uid);
-        const userSnapshot = await getDoc(userDoc);
+    const checkUser = async () => {
+      const unsubscribe = onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          setLoading(true);
+          setSignInUser(user);
+          // Fetch the user's document from the 'users' collection
+          const userDoc = doc(db, "users", user.uid);
+          const userSnapshot = await getDoc(userDoc);
 
-        // Check the user's role
-        if (userSnapshot.exists()) {
-          if (userSnapshot.data().role === "admin") {
-            // Redirect the user to the admin dashboard if they are an admin
-            router.push("/admin/dashboard");
-          } else {
-            // Sign out and redirect the user if they are not an admin
-            await signOut(auth);
-            router.push("/");
+          // Check the user's role
+          if (userSnapshot.exists()) {
+            if (userSnapshot.data().role === "admin") {
+              // Redirect the user to the admin dashboard if they are an admin
+              router.push("/admin/dashboard");
+            } else {
+              // Sign out and redirect the user if they are not an admin
+              await signOut(auth);
+              router.push("/");
+            }
           }
         }
-        setLoading(false);
-      }
-    });
+      });
 
-    // Clean up the onAuthStateChanged listener when the component is unmounted
-    return unsubscribe;
+      // Check if the user is already authenticated and has an admin role when the component is mounted
+      if (signInUser) {
+        const userDoc = doc(db, "users", signInUser.uid);
+        const userSnapshot = await getDoc(userDoc);
+        if (userSnapshot.exists() && userSnapshot.data().role === "admin") {
+          router.push("/admin/dashboard");
+        }
+        setLoading(false);      
+      }
+
+      // Clean up the onAuthStateChanged listener when the component is unmounted
+      return unsubscribe;
+    };
+
+    checkUser();
   }, []);
 
   const handleGoogleSignin = async () => {
     try {
-      setLoading(true);
       const result = await signInWithPopup(auth, googleProvider);
+      setLoading(true);
       const userObj = {
         name: result.user.displayName,
         photo: result.user.photoURL,
