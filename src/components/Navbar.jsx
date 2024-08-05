@@ -2,9 +2,11 @@
 import React, { useState, useEffect } from "react";
 
 // Icons
-import WbSunnyRoundedIcon from "@mui/icons-material/WbSunnyRounded";
+
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 
+//
+import ThemeSwitcher from "./ThemeSwitcher";
 // Redux
 import { toggleTheme, setTheme } from "@/redux/themeSlice";
 import { openModal, closeModal } from "@/redux/modalSlice";
@@ -12,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Link from "next/link";
 
-import { signInWithPopup, signOut } from "firebase/auth";
+import { signInWithPopup } from "firebase/auth";
 import { auth, googleProvider, db } from "@/firebase/firebase";
 import { setUser } from "@/redux/authSlice";
 import { doc, getDoc, setDoc } from "firebase/firestore";
@@ -22,23 +24,12 @@ import ProfileModal from "./Modals/ProfileModal";
 
 function Navbar({ setMessage, setIsUser, setLogoutMessage }) {
   const dispatch = useDispatch();
-  const darkTheme = useSelector((state) => state.theme.darkTheme);
+  const themeColor = useSelector((state) => state.theme.themeColor);
   const user = useSelector((state) => state.auth.user);
   const nameModal = useSelector((state) => state.modal.nameModal);
   const modalShow = useSelector((state) => state.modal.modalShow);
   const [isLogin, setIsLogin] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // Load the theme before the application starts
-  useEffect(() => {
-    // Load the theme before the application starts
-    if (typeof window !== "undefined") {
-      const savedDarkTheme = JSON.parse(window.localStorage.getItem("darkTheme"));
-      if (savedDarkTheme !== null) {
-        dispatch(setTheme(savedDarkTheme));
-      }
-    }
-  }, [dispatch]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -49,18 +40,6 @@ function Navbar({ setMessage, setIsUser, setLogoutMessage }) {
       }
     }
   }, []);
-
-  useEffect(() => {
-    document.body.className = darkTheme ? "darkTheme" : "";
-  }, [darkTheme]);
-
-  const handleTheme = () => {
-    dispatch(toggleTheme());
-    const currentTheme = darkTheme ? false : true;
-    if (typeof window !== "undefined") {
-      window.localStorage.setItem("darkTheme", JSON.stringify(currentTheme));
-    }
-  };
   const signInWithGoogle = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
@@ -98,7 +77,7 @@ function Navbar({ setMessage, setIsUser, setLogoutMessage }) {
   return (
     <header
       className={`header ${
-        darkTheme ? "bg-gray-950 shadow-xl" : "shadow bg-white"
+        themeColor === "dark" ? "bg-gray-950 shadow-xl" : "shadow bg-white"
       } fixed  z-20 top-0 left-0 right-0 h-[50px] min-w-80`}
     >
       <div className="header__flex  relative flex  w-full h-full justify-between items-center p-2 sm:px-16">
@@ -135,7 +114,7 @@ function Navbar({ setMessage, setIsUser, setLogoutMessage }) {
                   <ExpandMoreRoundedIcon
                     style={{ fontSize: ".9rem" }}
                     className={`absolute bg-gray-300  ${
-                      darkTheme ? "bg-gray-900" : ""
+                      themeColor === "dark" ? "bg-gray-900" : ""
                     } rounded-full text-[12px] right-[1px] bottom-0`}
                   />
                   <ProfileModal
@@ -153,10 +132,7 @@ function Navbar({ setMessage, setIsUser, setLogoutMessage }) {
               </span>
             )}
           </div>
-          <WbSunnyRoundedIcon
-            className={`cursor-pointer transition-colors duration-300 ease-in-out  active:scale-105 hover:text-violet-900`}
-            onClick={() => handleTheme()}
-          />
+          <ThemeSwitcher />
         </nav>
       </div>
     </header>
