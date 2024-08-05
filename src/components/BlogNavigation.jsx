@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 const BlogNavigation = ({ headings }) => {
   const [activeId, setActiveId] = useState(headings[0]?.id);
-  const darkTheme = useSelector((state) => state.theme.darkTheme);
+  const themeColor = useSelector((state) => state.theme.themeColor);
   useEffect(() => {
     const handleScroll = () => {
       const sections = document.querySelectorAll("h2");
@@ -31,7 +31,7 @@ const BlogNavigation = ({ headings }) => {
 
   return (
     <nav>
-      <ul className={`${darkTheme ? "bg-[#1a202c]" : "bg-white"}`}>
+      <ul className={`${themeColor === "dark" ? "bg-[#1a202c]" : "bg-white"}`}>
         {headings.map((heading) => (
           <li
             key={heading.id}
