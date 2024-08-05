@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 function Search() {
   const [searchQuery, setSearchQuery] = useState("");
-  const darkTheme = useSelector((state) => state.theme.darkTheme);
+  const themeColor = useSelector((state) => state.theme.themeColor);
   const router = useRouter();
 
   const handleSearch = (e) => {
@@ -41,8 +41,8 @@ function Search() {
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
         placeholder="Search blogs..."
-        className={`w-full sm:w-auto p-1 px-2 pr-10 h-10 w-[250px] border-b-2  outline-none  ${
-          darkTheme
+        className={`w-full sm:w-auto p-1 px-2 pr-10 h-10 w-[250px] border-b-2 outline-none ${
+          themeColor === "dark"
             ? "bg-[#1a202c] text-white border-gray-700"
             : "text-black border-gray-400"
         }`}
