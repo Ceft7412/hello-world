@@ -4,6 +4,7 @@ import authReducer from "../redux/authSlice";
 import blogsReducer from "../redux/blogsSlice";
 import modalReducer from "../redux/modalSlice";
 import likesReducer from "../redux/likesSlice";
+import activeReducer from "../redux/activeSlice";
 
 export default configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export default configureStore({
     blogs: blogsReducer,
     modal: modalReducer,
     likes: likesReducer,
+    active: activeReducer,
   },
 });
