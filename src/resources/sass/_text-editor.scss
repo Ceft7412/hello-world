@@ -1,0 +1,57 @@
+/* styles/RichTextEditor.css */
+
+/* Quill Editor */
+
+.quill {
+}
+.ql-container {
+  min-height: 300px;
+  border: 1px solid red;
+
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.ql-toolbar {
+  background-color: #f3f3f3;
+
+  border-bottom: 1px solid #ccc;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+.ql-editor {
+  padding: 10px;
+  min-height: 200px;
+  font-size: 16px;
+
+  line-height: 1.5;
+}
+
+.ql-editor h1 {
+  font-size: 2em;
+}
+
+.ql-editor h2 {
+  font-size: 1.75em;
+}
+
+.ql-editor h3 {
+  font-size: 1.5em;
+}
+
+.ql-editor h4 {
+  font-size: 1.25em;
+}
+
+.ql-editor h5 {
+  font-size: 1em;
+}
+
+.ql-editor h6 {
+  font-size: 0.75em;
+}
+
+.ql-editor p {
+  margin-bottom: 10px;
+}
