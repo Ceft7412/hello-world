@@ -32,7 +32,7 @@ function Signin() {
           if (userSnapshot.exists()) {
             if (userSnapshot.data().role === "admin") {
               // Redirect the user to the admin dashboard if they are an admin
-              router.push("/admin/dashboard");
+              router.push("/admin/all-blogs");
             } else {
               // Sign out and redirect the user if they are not an admin
               await signOut(auth);
@@ -47,9 +47,9 @@ function Signin() {
         const userDoc = doc(db, "users", signInUser.uid);
         const userSnapshot = await getDoc(userDoc);
         if (userSnapshot.exists() && userSnapshot.data().role === "admin") {
-          router.push("/admin/dashboard");
+          router.push("/admin/all-blogs");
         }
-        setLoading(false);      
+        setLoading(false);
       }
 
       // Clean up the onAuthStateChanged listener when the component is unmounted
