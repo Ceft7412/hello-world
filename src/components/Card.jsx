@@ -39,7 +39,7 @@ function CardContainer({ children }) {
     <section
       className={`border-b-[3px] sm:h-70 sm:hover:scale-105
    transition-transform duration-[220ms] px-2 sm:px-6 py-2 sm:hover:shadow-xl sm:hover:rounded-md ${
-     themeColor === "dark" ? "hover:bg-gray-950 border-gray-700" : "border-gray-200"
+     themeColor === "dark" ? "sm:hover:bg-gray-950 border-gray-700" : "border-gray-200"
    } overflow-y-auto`}
     >
       {children}
