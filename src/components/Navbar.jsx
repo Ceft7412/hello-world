@@ -77,7 +77,7 @@ function Navbar({ setMessage, setIsUser, setLogoutMessage }) {
   return (
     <header
       className={`header ${
-        themeColor === "dark" ? "bg-gray-950 shadow-xl" : "shadow bg-white"
+        themeColor === "dark" ? "bg-gray-950 shadow-xl" : "border-b bg-white"
       } fixed  z-20 top-0 left-0 right-0 h-[50px] min-w-80`}
     >
       <div className="header__flex  relative flex  w-full h-full justify-between items-center p-2 sm:px-16">
