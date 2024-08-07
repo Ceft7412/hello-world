@@ -9,11 +9,20 @@ const RichTextEditor = ({ value, onChange }) => {
       [{ header: [1, 2, 3, 4, 5, 6, false] }],
       ["bold", "italic", "underline"],
       [{ list: "ordered" }, { list: "bullet" }],
+      ["code-block"],
       ["clean"],
     ],
   };
 
-  const formats = ["header", "bold", "italic", "underline", "list", "bullet"];
+  const formats = [
+    "header",
+    "bold",
+    "italic",
+    "underline",
+    "list",
+    "bullet",
+    "code-block",
+  ];
 
   return (
     <ReactQuill
