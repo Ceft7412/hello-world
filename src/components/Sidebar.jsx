@@ -12,16 +12,14 @@ export default function Sidebar() {
   const themeColor = useSelector((state) => state.theme.themeColor);
 
   useEffect(() => {
-    // Set the active state based on the current route
     if (pathName) {
-      const currentRoute = pathName.split("/")[2]; // Assuming your routes are in the format '/admin/{route}'
-      dispatch(setActive(currentRoute));
+      const currentRoute = pathName.split("/")[2];
     }
   }, [pathName]);
   const handleOnClick = (active) => {
-    active === "new-blog"
-      ? dispatch(setActive("new-blog")) && router.push("/admin/new-blog")
-      : dispatch(setActive("all-blogs")) && router.push("/admin/all-blogs");
+    active === "newblog"
+      ? dispatch(setActive("newblog")) && router.push("/admin/newblog")
+      : dispatch(setActive("allblogs")) && router.push("/admin/allblogs");
   };
   return (
     <section
@@ -36,22 +34,22 @@ export default function Sidebar() {
       >
         <li
           className={`p-1 transition-colors duration-300 rounded-md ${
-            active === "all-blogs"
+            active === "allblogs"
               ? "bg-gray-500/[0.1] cursor-default"
               : "cursor-pointer hover:bg-gray-500/[0.1]"
           }`}
-          onClick={() => handleOnClick("all-blogs")}
+          onClick={() => handleOnClick("allblogs")}
         >
           All Blogs
         </li>
 
         <li
           className={`p-1 transition-colors duration-300 rounded-md ${
-            active === "new-blog"
+            active === "newblog"
               ? "bg-gray-500/[0.1] cursor-default"
               : "cursor-pointer hover:bg-gray-500/[0.1]"
           }`}
-          onClick={() => handleOnClick("new-blog")}
+          onClick={() => handleOnClick("newblog")}
         >
           New Blog
         </li>
