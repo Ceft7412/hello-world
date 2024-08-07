@@ -18,7 +18,6 @@ export default function FilterModal({ setHasQueryParams, setTextDisplay, categor
   const nameModal = useSelector((state) => state.modal.nameModal);
   const modalShow = useSelector((state) => state.modal.modalShow);
   const [showModal, setShowModal] = React.useState(false);
-  console.log(showModal);
   const router = useRouter();
 
   const handleCategoryClick = (category, categoryName) => {
