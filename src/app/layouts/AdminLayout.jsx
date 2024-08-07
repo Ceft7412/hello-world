@@ -19,7 +19,7 @@ function AdminLayout({ children }) {
     <>
       <Navbar />
       <Sidebar currentRoute={route} />
-      <main className="flex items-center justify-center min-h-screen sm:ml-[180px] py-24 px-4 sm:px-10 min-w-90">
+      <main className="flex items-center justify-center min-h-screen sm:ml-[180px] pt-40 sm:pt-24 sm:py-24  px-4 sm:px-10 min-w-90">
         {children}
       </main>
     </>
