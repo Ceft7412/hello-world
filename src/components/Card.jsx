@@ -13,8 +13,8 @@ export default function Card({ darkTheme, blogs }) {
       {blogs.map((blog) => (
         <CardContainer key={blog.id}>
           <div className="flex gap-5">
-            {blog.subcategories.map((cat) => (
-              <Category key={cat.id}>{cat.name}</Category>
+            {blog.subcategories.map((cat, index) => (
+              <Category key={index}>{cat.name}</Category>
             ))}
           </div>
           <h1 className="mb-5 text-2xl">{blog.title}</h1>
