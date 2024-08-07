@@ -7,9 +7,8 @@ import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 
 //
 import ThemeSwitcher from "./ThemeSwitcher";
-import Cookies from "js-cookie";
+
 // Redux
-import { toggleTheme, setTheme } from "@/redux/themeSlice";
 import { openModal, closeModal } from "@/redux/modalSlice";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -20,7 +19,7 @@ import { auth, googleProvider, db } from "@/firebase/firebase";
 import { setUser } from "@/redux/authSlice";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import Image from "next/image";
-import nookies from "nookies"; // Import nookies
+import nookies from "nookies"; 
 
 import ProfileModal from "./Modals/ProfileModal";
 
