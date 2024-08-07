@@ -1,11 +1,12 @@
-
 import React from "react";
 import AdminLayout from "@/app/layouts/AdminLayout";
 
-export default function page() {
+function Blogs() {
   return (
     <AdminLayout>
-      <div>page</div>
+      <div>Blogs</div>
     </AdminLayout>
   );
 }
+
+export default Blogs;
