@@ -36,7 +36,7 @@ function Signin() {
           if (userSnapshot.exists()) {
             if (userSnapshot.data().role === "admin") {
               // Redirect the user to the admin dashboard if they are an admin
-              router.push("/admin/all-blogs");
+              router.push("/admin/allblogs");
             } else {
               // Sign out and redirect the user if they are not an admin
               await signOut(auth);
@@ -51,7 +51,7 @@ function Signin() {
         const userDoc = doc(db, "users", signInUser.uid);
         const userSnapshot = await getDoc(userDoc);
         if (userSnapshot.exists() && userSnapshot.data().role === "admin") {
-          router.push("/admin/all-blogs");
+          router.push("/admin/allblogs");
         }
         setLoading(false);
       }
@@ -112,7 +112,9 @@ function Signin() {
   return (
     <AuthLayout>
       <section
-        className={`whitespace-nowrap mb-10 ${themeColor === "dark" ? "text-black " : ""}`}
+        className={`whitespace-nowrap mb-10 ${
+          themeColor === "dark" ? "text-black " : ""
+        }`}
       >
         <div className="header text-center mb-10 text-[22px] border-b-2 border-black">
           <h1 className="header__logo">

@@ -49,5 +49,5 @@ function parseCookies(cookieHeader) {
 
 export const config = {
   // Define URL paths that this middleware will apply to
-  matcher: ["/admin/all-blogs", "/admin/new-blog"],
+  matcher: ["/admin/allblogs", "/admin/newblog"],
 };
