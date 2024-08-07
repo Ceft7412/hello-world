@@ -1,17 +1,23 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setActive } from "@/redux/activeSlice";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
+import { useRouter, usePathname } from "next/navigation";
 
 export default function Sidebar() {
   const router = useRouter();
+  const pathName = usePathname();
   const dispatch = useDispatch();
   const active = useSelector((state) => state.active.active);
   const themeColor = useSelector((state) => state.theme.themeColor);
 
+  useEffect(() => {
+    // Set the active state based on the current route
+    if (pathName) {
+      const currentRoute = pathName.split("/")[2]; // Assuming your routes are in the format '/admin/{route}'
+      dispatch(setActive(currentRoute));
+    }
+  }, [pathName]);
   const handleOnClick = (active) => {
     active === "new-blog"
       ? dispatch(setActive("new-blog")) && router.push("/admin/new-blog")
@@ -23,12 +29,16 @@ export default function Sidebar() {
         themeColor === "dark" ? "bg-gray-950" : "bg-white border-r "
       }`}
     >
-      <ul className="mt-5 text-[18px] px-2 flex flex-col gap-1 text-gray-700  ">
+      <ul
+        className={`mt-5 text-[16px] px-2 flex flex-col gap-1 ${
+          themeColor === "dark" ? "text-gray-300" : "text-gray-700  "
+        }`}
+      >
         <li
           className={`p-1 transition-colors duration-300 rounded-md ${
             active === "all-blogs"
-              ? "bg-gray-100 cursor-default"
-              : "cursor-pointer hover:bg-gray-200"
+              ? "bg-gray-500/[0.1] cursor-default"
+              : "cursor-pointer hover:bg-gray-500/[0.1]"
           }`}
           onClick={() => handleOnClick("all-blogs")}
         >
@@ -38,8 +48,8 @@ export default function Sidebar() {
         <li
           className={`p-1 transition-colors duration-300 rounded-md ${
             active === "new-blog"
-              ? "bg-gray-100 cursor-default"
-              : "cursor-pointer hover:bg-gray-100"
+              ? "bg-gray-500/[0.1] cursor-default"
+              : "cursor-pointer hover:bg-gray-500/[0.1]"
           }`}
           onClick={() => handleOnClick("new-blog")}
         >
