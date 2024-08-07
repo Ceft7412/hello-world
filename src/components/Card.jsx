@@ -17,8 +17,8 @@ export default function Card({ darkTheme, blogs }) {
               <Category key={index}>{cat.name}</Category>
             ))}
           </div>
-          <h1 className="mb-5 text-2xl">{blog.title}</h1>
-          <p className="h-17 line-clamp-2">{blog.summary}</p>
+          <h1 className="mb-5 text-2xl font-medium">{blog.title}</h1>
+          <p className="h-17 line-clamp-2 text-[15px]">{blog.summary}</p>
           <Link href={`/blog/${slugify(blog.title)}`}>
             <button
               type="button"

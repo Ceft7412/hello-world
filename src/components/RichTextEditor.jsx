@@ -13,7 +13,7 @@ const RichTextEditor = ({ value, onChange }) => {
       ["clean"],
     ],
   };
-
+  
   const formats = [
     "header",
     "bold",

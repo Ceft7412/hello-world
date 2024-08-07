@@ -7,13 +7,15 @@
 html {
   &.dark {
     background-color: #1a202c;
-    color: white;
+    color: rgba(255, 255, 255, 0.85);
   }
   &.light {
     background-color: white;
+    color: rgba(31, 23, 23, 0.85);
   }
 }
 
 body {
-  font-family: "Acre", "Times New Roman", sans-serif;
+  font-family: "Figtree", "Times New Roman", sans-serif;
+  -webkit-font-smoothing: antialiased;
 }

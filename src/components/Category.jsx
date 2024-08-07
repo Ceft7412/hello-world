@@ -5,7 +5,7 @@ export default function Category({ children }) {
   const themeColor = useSelector((state) => state.theme.themeColor);
   return (
     <h2
-      className={`${
+      className={`font-bold ${
         themeColor === "dark" ? "bg-white text-black" : " bg-gray-950 text-white"
       } p-1 px-2   mb-8`}
     >

@@ -61,7 +61,7 @@ export default async function BlogPost({ params }) {
             <header className="border-b">
               <h1 className="text-4xl font-bold">{blog.title}</h1>
               <div className="my-4 flex flex-col">
-                <span className="">By {blog.author}</span>
+                <span className="">{blog.author}</span>
                 <span>
                   {month} {day}, {year}
                 </span>

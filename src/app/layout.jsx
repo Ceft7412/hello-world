@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
       <body>
         <Providers>
           <ThemeProvider>
-            <NextTopLoader color="purple" />
+            <NextTopLoader color="skyblue " />
             {children}
           </ThemeProvider>
         </Providers>

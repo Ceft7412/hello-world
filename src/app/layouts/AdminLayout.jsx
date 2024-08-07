@@ -12,7 +12,6 @@ function AdminLayout({ children }) {
   useEffect(() => {
     if (pathName) {
       const currentRoute = pathName.split("/")[2];
-      console.log("currentRoute:", currentRoute);
       setRoute(currentRoute);
     }
   }, [pathName]);
@@ -20,7 +19,7 @@ function AdminLayout({ children }) {
     <>
       <Navbar />
       <Sidebar currentRoute={route} />
-      <main className="flex items-center justify-center min-h-screen sm:ml-[180px] py-24 px-4 sm:px-10 min-w-80">
+      <main className="flex items-center justify-center min-h-screen sm:ml-[180px] py-24 px-4 sm:px-10 min-w-90">
         {children}
       </main>
     </>

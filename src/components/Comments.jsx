@@ -69,6 +69,7 @@ export default function Comments({ blog }) {
                   <span className="text-[18px]">{comment.userName}</span>
                   {user && user.uid === comment.userId && (
                     <DeleteRoundedIcon
+                      title="Delete comment"
                       className="cursor-pointer"
                       onClick={() => confirmation(comment.id, user.uid)}
                     />
