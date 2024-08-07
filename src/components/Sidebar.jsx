@@ -4,21 +4,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { setActive } from "@/redux/activeSlice";
 import { useRouter, usePathname } from "next/navigation";
 
-export default function Sidebar() {
+export default function Sidebar({ currentRoute }) {
   const router = useRouter();
-  const pathName = usePathname();
   const dispatch = useDispatch();
-  const active = useSelector((state) => state.active.active);
   const themeColor = useSelector((state) => state.theme.themeColor);
 
-  useEffect(() => {
-    if (pathName) {
-      const currentRoute = pathName.split("/")[2];
-      dispatch(setActive(currentRoute));
-    }
-  }, [pathName]);
-  const handleOnClick = (active) => {
-    active === "newblog"
+  const handleOnClick = (set) => {
+    set === "newblog"
       ? dispatch(setActive("newblog")) && router.push("/admin/newblog")
       : dispatch(setActive("allblogs")) && router.push("/admin/allblogs");
   };
@@ -35,7 +27,7 @@ export default function Sidebar() {
       >
         <li
           className={`p-1 transition-colors duration-300 rounded-md ${
-            active === "allblogs"
+            currentRoute === "allblogs"
               ? "bg-gray-500/[0.1] cursor-default"
               : "cursor-pointer hover:bg-gray-500/[0.1]"
           }`}
@@ -46,7 +38,7 @@ export default function Sidebar() {
 
         <li
           className={`p-1 transition-colors duration-300 rounded-md ${
-            active === "newblog"
+            currentRoute === "newblog"
               ? "bg-gray-500/[0.1] cursor-default"
               : "cursor-pointer hover:bg-gray-500/[0.1]"
           }`}
