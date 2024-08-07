@@ -1,6 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import RichTextEditor from "@/components/RichTextEditor";
+import dynamic from "next/dynamic";
+
+const DynamicRichTextEditor = dynamic(() => import("@/components/RichTextEditor"), {
+  ssr: false, // This will load the component only on client side
+});
 import ModalCenter from "@/components/Modals/ModalCenter";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
@@ -160,7 +164,7 @@ function NewBlog({ categories }) {
             )}
           </div>
           <div className="mb-8">
-            <RichTextEditor
+            <DynamicRichTextEditor
               value={editorContent}
               onChange={(content) => {
                 setEditorContent(content);
