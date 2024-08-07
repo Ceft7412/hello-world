@@ -55,10 +55,10 @@ export default async function BlogPost({ params }) {
 
   return (
     <MainLayout>
-      <section className="flex p-1 sm:w-[80%] xl:pr-[250px]">
+      <section className="flex p-1 sm:w-[80%] xl:pr-[250px] mb-10">
         <div className="flex-1">
           <article className="">
-            <header className="border-b">
+            <header className="border-b mb-10">
               <h1 className="text-4xl font-bold">{blog.title}</h1>
               <div className="my-4 flex flex-col">
                 <span className="">{blog.author}</span>
