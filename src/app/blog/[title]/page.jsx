@@ -47,7 +47,6 @@ export default async function BlogPost({ params }) {
     tagName: heading.tagName.toLowerCase(),
     text: heading.textContent,
   }));
-  console.log(blog);
 
   const dateObj = blog.date.toDate();
   const month = dateObj.toLocaleString("default", { month: "long" });
