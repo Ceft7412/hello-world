@@ -122,7 +122,7 @@ function NewBlog({ categories }) {
   return (
     <>
       {message && (
-        <div className="fixed flex gap-2 left-5 bottom-5 rounded p-2 px-3 bg-[#DBFCD6] border border-green-200 text-white">
+        <div className="fixed z-[60px] flex gap-2 left-5 bottom-5 rounded p-2 px-3 bg-[#DBFCD6] border border-green-200 text-white">
           <CheckRoundedIcon className="text-green-500" />
           <p className="text-green-800">{message}</p>
         </div>

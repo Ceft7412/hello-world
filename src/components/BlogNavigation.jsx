@@ -30,7 +30,7 @@ const BlogNavigation = ({ headings }) => {
   }, []);
 
   return (
-    <nav>
+    <nav className="w-[250px]">
       <ul className={`${themeColor === "dark" ? "bg-[#1a202c]" : "bg-white"}`}>
         {headings.map((heading) => (
           <li
