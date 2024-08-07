@@ -5,13 +5,17 @@ import AuthLayout from "@/app/layouts/AuthLayout";
 import { signInWithPopup, signOut, onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, googleProvider, db } from "@/firebase/firebase";
+import { useSelector } from "react-redux";
 
 // To Navigate to a different page
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/redux/authSlice";
+import nookies from "nookies"; // Import nookies
+
 import { useState, useEffect } from "react";
 function Signin() {
+  const themeColor = useSelector((state) => state.theme.themeColor);
   const router = useRouter();
   const dispatch = useDispatch();
   const [signInUser, setSignInUser] = useState(null);
@@ -51,8 +55,6 @@ function Signin() {
         }
         setLoading(false);
       }
-
-      // Clean up the onAuthStateChanged listener when the component is unmounted
       return unsubscribe;
     };
 
@@ -69,9 +71,30 @@ function Signin() {
         token: result.user.accessToken,
         uid: result.user.uid,
       };
+      nookies.set(null, "user", JSON.stringify(userObj), {
+        maxAge: 30 * 24 * 60 * 60, // 30 days
+      });
+
       if (typeof window !== "undefined") {
         window.localStorage.setItem("user", JSON.stringify(userObj));
       }
+      const userRef = doc(db, "users", result.user.uid);
+      const userSnap = await getDoc(userRef);
+
+      if (!userSnap.exists()) {
+        await setDoc(userRef, {
+          name: result.user.displayName,
+          email: result.user.email,
+          photoURL: result.user.photoURL,
+          role: "user",
+        });
+      }
+      // Set role cookie
+      const userRole = userSnap.exists() ? userSnap.data().role : "user";
+      nookies.set(null, "role", userRole, {
+        maxAge: 30 * 24 * 60 * 60, // 30 days
+        path: "/",
+      });
       dispatch(setUser(userObj));
     } catch (error) {
       setMessage("Oops! Something went wrong.");
@@ -88,7 +111,9 @@ function Signin() {
   }
   return (
     <AuthLayout>
-      <section className="whitespace-nowrap mb-10">
+      <section
+        className={`whitespace-nowrap mb-10 ${themeColor === "dark" ? "text-black " : ""}`}
+      >
         <div className="header text-center mb-10 text-[22px] border-b-2 border-black">
           <h1 className="header__logo">
             HELLO, <span className="logo__world">WORLD!</span>
