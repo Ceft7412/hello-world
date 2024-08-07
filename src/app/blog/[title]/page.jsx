@@ -48,7 +48,7 @@ export default async function BlogPost({ params }) {
     text: heading.textContent,
   }));
 
-  const dateObj = blog.date.toDate();
+  const dateObj = blog.date; // blog.date is already a Date object
   const month = dateObj.toLocaleString("default", { month: "long" });
   const day = dateObj.getDate();
   const year = dateObj.getFullYear();
