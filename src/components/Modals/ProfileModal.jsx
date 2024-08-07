@@ -36,6 +36,13 @@ export default function ProfileModal({ user, setIsLogin, setLogoutMessage }) {
     },
   };
 
+  const clearCookies = () => {
+    const cookies = ["token", "user", "role"];
+    cookies.forEach((cookie) => {
+      document.cookie = `${cookie}=; Path=/; SameSite=Strict; Max-Age=0`;
+    });
+  };
+
   const logout = async () => {
     try {
       const userDoc = doc(db, "users", user.uid);
@@ -51,9 +58,10 @@ export default function ProfileModal({ user, setIsLogin, setLogoutMessage }) {
 
       if (typeof window !== "undefined") {
         window.localStorage.removeItem("user");
+        clearCookies();
       }
       setLogoutMessage(true);
-      setIsLogin(false);
+      setIsLogin(false);  
       dispatch(clearUser());
     } catch (error) {
       console.error(error);
