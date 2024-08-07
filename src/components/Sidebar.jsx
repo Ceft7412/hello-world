@@ -14,6 +14,7 @@ export default function Sidebar() {
   useEffect(() => {
     if (pathName) {
       const currentRoute = pathName.split("/")[2];
+      dispatch(setActive(currentRoute));
     }
   }, [pathName]);
   const handleOnClick = (active) => {
