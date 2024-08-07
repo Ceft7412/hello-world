@@ -7,6 +7,7 @@ import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 
 //
 import ThemeSwitcher from "./ThemeSwitcher";
+import Cookies from "js-cookie";
 // Redux
 import { toggleTheme, setTheme } from "@/redux/themeSlice";
 import { openModal, closeModal } from "@/redux/modalSlice";
@@ -19,6 +20,7 @@ import { auth, googleProvider, db } from "@/firebase/firebase";
 import { setUser } from "@/redux/authSlice";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import Image from "next/image";
+import nookies from "nookies"; // Import nookies
 
 import ProfileModal from "./Modals/ProfileModal";
 
@@ -43,13 +45,17 @@ function Navbar({ setMessage, setIsUser, setLogoutMessage }) {
   const signInWithGoogle = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
-
       const userObj = {
         name: result.user.displayName,
         photo: result.user.photoURL,
         token: result.user.accessToken,
         uid: result.user.uid,
       };
+      // Set user data in cookies
+      nookies.set(null, "user", JSON.stringify(userObj), {
+        maxAge: 30 * 24 * 60 * 60, // 30 days
+        path: "/",
+      });
       if (typeof window !== "undefined") {
         window.localStorage.setItem("user", JSON.stringify(userObj));
       }
@@ -64,6 +70,14 @@ function Navbar({ setMessage, setIsUser, setLogoutMessage }) {
           role: "user",
         });
       }
+
+      // Set role cookie
+      const userRole = userSnap.exists() ? userSnap.data().role : "user";
+      nookies.set(null, "role", userRole, {
+        maxAge: 30 * 24 * 60 * 60, // 30 days
+        path: "/",
+      });
+
       setMessage(true);
       setIsUser(userObj);
       setIsLogin(true);
