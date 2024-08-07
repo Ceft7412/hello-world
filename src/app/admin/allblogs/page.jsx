@@ -4,7 +4,7 @@ import AdminLayout from "@/app/layouts/AdminLayout";
 function Blogs() {
   return (
     <AdminLayout>
-      <div>Blogs</div>
+      <div>I love you so much, Shara ❤️</div>
     </AdminLayout>
   );
 }
