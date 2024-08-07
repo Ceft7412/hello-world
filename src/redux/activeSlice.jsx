@@ -4,9 +4,9 @@ let initialState;
 if (typeof window !== "undefined") {
   initialState = localStorage.getItem("active")
     ? JSON.parse(localStorage.getItem("active"))
-    : { active: "all-blogs" };
+    : { active: "allblogs" };
 } else {
-  initialState = { active: "all-blogs" };
+  initialState = { active: "allblogs" };
 }
 
 export const activeSlice = createSlice({
