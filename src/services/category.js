@@ -10,4 +10,3 @@ export const fetchCategories = async () => {
   }));
   return categoryList;
 };
-    
