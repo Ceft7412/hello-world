@@ -1,6 +1,6 @@
 ## HELLO WORLD 
 <h1 align="center">
-  <a href="https://helloworldblog.vercel.app/">helloworldblog.vercel.app</a>
+  <a href="https://helloworldblog.vercel.app/" target="_blank" >helloworldblog.vercel.app</a>
 </h1>
 
 ## MADE WITH: 
